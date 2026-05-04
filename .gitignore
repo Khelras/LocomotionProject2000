@@ -1,0 +1,8 @@
+﻿.vs
+Debug/*.exe
+Debug/*.pdb
+Release/*.exe
+Release/*.pdb
+LocomotionProject2000/Debug
+LocomotionProject2000/Release
+LocomotionProject2000/LocomotionProject2000.vcxproj.user
