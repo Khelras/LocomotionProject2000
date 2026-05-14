@@ -11,7 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
-#include "locomotionproject2000/core/SceneManager.h"
+#include "locomotionproject2000/scenes/SceneManager.h"
 
 /// <summary>
 ///		Window class inherits from SFML's RenderWindow class which allows for easy Window processing within it's own class.

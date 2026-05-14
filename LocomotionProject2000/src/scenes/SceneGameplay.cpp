@@ -4,40 +4,15 @@ Media Design School
 Auckland
 New Zealand
 (c) 2025 Media Design School
-File Name   : SceneMain.cpp
-Description : Defines the SceneMain Class Functions and Properties.
+File Name   : SceneGameplay.cpp
+Description : Defines the SceneGameplay Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
-#include "locomotionproject2000/scenes/SceneMain.h"
+#include "locomotionproject2000/scenes/SceneGameplay.h"
 
-SceneMain::SceneMain() {
-	// -- Escape Key Pressed -- //
-	this->m_commands.push_back({
-		// Execution Criteria
-		[](const sf::Event& event) {
-			// First check if the Event was a Key Press, then check if the Key was the Escape key
-			if (const auto* key = event.getIf<sf::Event::KeyPressed>( )) {
-				return key->scancode == sf::Keyboard::Scancode::Escape;
-			}
-
-			// Otherwise, the event does not match the criteria
-			return false;
-		},
-		// Command Action
-		[this](const CommandContext& ctx) {
-			// DEBUG
-			std::cout << "Escape-Key Pressed in context of Main Scene!" << std::endl;
-
-			// Close the Window
-			ctx.window.close();
-		}
-	});
-	// -- //
-
-
-
+SceneGameplay::SceneGameplay() {
 	// -- Left Mouse Button Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria
@@ -53,7 +28,7 @@ SceneMain::SceneMain() {
 		// Command Action
 		[this](const CommandContext& ctx) {
 			// DEBUG
-			std::cout << "Left-Mouse-Button Pressed in context of Main Scene!" << std::endl;
+			std::cout << "Left-Mouse-Button Pressed in context of Gameplay Scene!" << std::endl;
 			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
 			std::cout << "Mouse Position: (" << mousePos.x << ", " << mousePos.y << ")" << std::endl;
 		}
@@ -61,10 +36,10 @@ SceneMain::SceneMain() {
 	// -- //
 }
 
-SceneMain::~SceneMain() {
+SceneGameplay::~SceneGameplay() {
 }
 
-void SceneMain::handleEvent(const sf::Event& event, const CommandContext& ctx) {
+void SceneGameplay::handleEvent(const sf::Event& event, const CommandContext& ctx) {
 	// Loop through all Registered Commands and check if any of them match the given SFML Event
 	for (auto& command : this->m_commands) {
 		// Check if this Registered Command matches the given SFML Event
@@ -75,8 +50,8 @@ void SceneMain::handleEvent(const sf::Event& event, const CommandContext& ctx) {
 	}
 }
 
-void SceneMain::update(float dt) {
+void SceneGameplay::update(float dt) {
 }
 
-void SceneMain::draw(sf::RenderWindow& window) {
+void SceneGameplay::draw(sf::RenderWindow& window) {
 }

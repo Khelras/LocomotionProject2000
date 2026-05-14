@@ -15,6 +15,9 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <functional>
 
+// Forward declaration of SceneManager to avoid circular dependency
+class SceneManager; 
+
 /// <summary>
 ///		A struct to hold any necessary context information for Command execution.
 ///		This can be extended as needed to include relevant data that may be required by the Command.
@@ -24,6 +27,11 @@ struct CommandContext {
 	///		Reference to the SFML RenderWindow, which can be used by the Command to interact with the window.
 	/// </summary>
 	sf::RenderWindow& window;
+
+	/// <summary>
+	///		Reference to the SceneManager, which can be used by the Command to interact with the scene management system.
+	/// </summary>
+	SceneManager* sceneManager;
 };
 
 /// <summary>

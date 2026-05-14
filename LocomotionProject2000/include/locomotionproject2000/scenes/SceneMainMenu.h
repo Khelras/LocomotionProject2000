@@ -4,8 +4,8 @@ Media Design School
 Auckland
 New Zealand
 (c) 2025 Media Design School
-File Name   : SceneMain.h
-Description : Declares the SceneMain Class Functions and Properties.
+File Name   : SceneMainMenu.h
+Description : Declares the SceneMainMenu Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
@@ -15,9 +15,9 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "locomotionproject2000/scenes/Scene.h"
 
 /// <summary>
-///		The Main Scene class.
+///		The Main Menu Scene class.
 /// </summary>
-class SceneMain : public Scene {
+class SceneMainMenu: public Scene {
 private:
 	// -- Managers -- //
 
@@ -35,12 +35,12 @@ public:
 	/// <summary>
 	///		Constructor.
 	/// </summary>
-	SceneMain();
+	SceneMainMenu();
 
 	/// <summary>
 	///		Destructor.
 	/// </summary>
-	~SceneMain();
+	~SceneMainMenu();
 
 	//==================================================
 	// PRIMARY MAIN SCENE METHODS

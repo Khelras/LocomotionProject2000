@@ -35,7 +35,7 @@ Window::~Window() {
 
 void Window::process() {
 	// Create a CommandContext to pass to the SceneManager when processing Events and Commands
-	CommandContext ctx{ *this };
+	CommandContext ctx{ *this, &this->m_sceneManager };
 
 	// Clock
 	sf::Clock clock;
@@ -48,10 +48,27 @@ void Window::process() {
 		// Process all raw SFML Events
 		while (const auto event = this->pollEvent()) {
 			// -- 1. Global Raw SFML Event Handling -- //
-			// Window Close Event
+			// Window Close Event in Global Context
 			if (event->is<sf::Event::Closed>()) {
+				// DEBUG
+				std::cout << "Window Close Event triggered in Global Context!" << std::endl;
+
+				// Close the Window
 				this->close();
 				break;
+			}
+
+			// Key Pressed Event in Global Context
+			if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+				// Escape Key Pressed in Global Context
+				if (key->scancode == sf::Keyboard::Scancode::Escape) {
+					// DEBUG
+					std::cout << "Escape-Key Pressed in Global Context!" << std::endl;
+
+					// Close the Window
+					this->close();
+					break;
+				}
 			}
 			// -- //
 

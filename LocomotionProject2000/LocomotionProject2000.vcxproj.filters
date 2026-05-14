@@ -29,24 +29,30 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\SceneMain.cpp">
+    <ClCompile Include="src\scenes\SceneMainMenu.cpp">
       <Filter>Source Files\Scenes\Main Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\SceneManager.cpp">
+    <ClCompile Include="src\scenes\SceneManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Window.cpp">
       <Filter>Source Files\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\SceneGameplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\locomotionproject2000\scenes\SceneGameplay.h">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\locomotionproject2000\scenes\Scene.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="include\locomotionproject2000\scenes\SceneMain.h">
+    <ClInclude Include="include\locomotionproject2000\scenes\SceneMainMenu.h">
       <Filter>Source Files\Scenes\Main Scene</Filter>
     </ClInclude>
-    <ClInclude Include="include\locomotionproject2000\core\SceneManager.h">
+    <ClInclude Include="include\locomotionproject2000\scenes\SceneManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="include\locomotionproject2000\core\Command.h">

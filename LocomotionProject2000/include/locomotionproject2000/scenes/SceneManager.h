@@ -16,7 +16,8 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <map>
 #include <stack>
 
-#include "locomotionproject2000/scenes/SceneMain.h"
+#include "locomotionproject2000/scenes/SceneMainMenu.h"
+#include "locomotionproject2000/scenes/SceneGameplay.h"
 
 /// <summary>
 ///		SceneManager class is responsible for managing various scenes and 
@@ -68,4 +69,11 @@ public:
 	/// 
 	/// <param name="window">Render window target for drawing.</param>
 	void render(sf::RenderWindow& window);
+
+	/// <summary>
+	///		Transition to another scene by a given name.	
+	/// </summary>
+	/// 
+	/// <param name="sceneName"The name of the scene to switch to.></param>
+	void goToScene(const std::string& sceneName);
 };
