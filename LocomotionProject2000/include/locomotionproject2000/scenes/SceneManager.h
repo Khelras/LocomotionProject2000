@@ -71,6 +71,13 @@ public:
 	void render(sf::RenderWindow& window);
 
 	/// <summary>
+	///		Get the current active scene.
+	/// </summary>
+	/// 
+	/// <returns>The current active scene as a weak pointer.</returns>
+	std::weak_ptr<Scene> getActiveScene();
+
+	/// <summary>
 	///		Transition to another scene by a given name.	
 	/// </summary>
 	/// 

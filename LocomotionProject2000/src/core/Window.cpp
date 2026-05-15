@@ -96,7 +96,7 @@ void Window::process() {
 }
 
 void Window::clear() {
-	sf::RenderWindow::clear(sf::Color(6, 64, 43)); // Dark Green Background :D
+	sf::RenderWindow::clear(this->m_sceneManager.getActiveScene().lock()->getBackgroundColor());
 }
 
 void Window::draw() {

@@ -36,6 +36,10 @@ void SceneManager::render(sf::RenderWindow& window) {
 	this->m_sceneStack.top()->draw(window);
 }
 
+std::weak_ptr<Scene> SceneManager::getActiveScene() {
+	return std::weak_ptr<Scene>(this->m_sceneStack.top());
+}
+
 void SceneManager::goToScene(const std::string& sceneName) {
 	// Check if the requested scene exists in the registry
 	if (this->m_sceneRegistry.find(sceneName) != this->m_sceneRegistry.end()) {

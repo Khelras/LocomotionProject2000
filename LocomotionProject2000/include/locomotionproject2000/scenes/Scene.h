@@ -26,6 +26,7 @@ class Scene {
 protected:
     // -- Scene Properties -- //
     std::vector<Command> m_commands;
+	sf::Color m_backgroundColor = sf::Color(6, 64, 43); // Default to Dark Green Background Color
     // -- //
 
 public:
@@ -80,5 +81,12 @@ public:
     /// 
     /// <param name="window">Render target for drawing.</param>
     virtual void draw(sf::RenderWindow& window) = 0;
+
+    /// <summary>
+    ///     Return the background color of the scene.
+    /// </summary>
+    /// 
+    /// <returns>Background color</returns>
+    sf::Color getBackgroundColor() { return m_backgroundColor; };
 };
 

@@ -13,6 +13,9 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "locomotionproject2000/scenes/SceneGameplay.h"
 
 SceneGameplay::SceneGameplay() {
+	// Background Color
+	this->m_backgroundColor = sf::Color::Black;
+
 	// -- Left Mouse Button Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria
