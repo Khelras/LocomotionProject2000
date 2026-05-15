@@ -1,0 +1,58 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2026 Media Design School
+File Name   : Settings.h
+Description : Declares and Defines the Settings Class Interface and Template
+Author      : Angelo Joseph Arawiran Bohol
+Mail        : angelo.bohol@mds.ac.nz
+**************************************************************************/
+
+#pragma once
+
+/// <summary>
+///		Settings structure as a singleton pattern for global access.
+/// </summary>
+struct Settings {
+private:
+	/// <summary>
+	///		Private Default Constructor
+	/// </summary>
+	Settings() = default;
+
+public:
+	//==================================================
+	// SETTINGS SINGLETON DESIGN PATTERN
+	//==================================================
+
+	/// <summary>
+	///		Deleted Copy Constructor for Singleton Pattern.
+	/// </summary>
+	Settings(const Settings&) = delete;
+
+	/// <summary>
+	///		Deleted Assignment Operator for Singleton Pattern.
+	/// </summary>
+	Settings& operator=(const Settings&) = delete;
+
+	/// <summary>
+	///		Global access point. Get the Instance of Settings.
+	/// </summary>
+	/// 
+	/// <returns>Settings.</returns>
+	static Settings& getInstance() {
+		static Settings instance;
+		return instance;
+	}
+
+	//==================================================
+	// SETTINGS PROPERTIES
+	//==================================================
+
+	// -- Window Size Settings -- //
+	unsigned int windowWidth = 1200;
+	unsigned int windowHeight = 800;
+	// -- //
+};

@@ -15,6 +15,9 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <vector>
 #include <memory>
 
+// Forward declaration of Agent for the AgentUpdateContext struct
+class Agent;
+
 /// <summary>
 ///		Context required for the Agent's update() function.
 /// </summary>
@@ -23,11 +26,6 @@ struct AgentUpdateContext {
 	///		Delta Time as a floating-point.
 	/// </summary>
 	float dt;
-
-	/// <summary>
-	///		A reference to an SFML RenderWindow.
-	/// </summary>
-	sf::RenderWindow& window;
 
 	/// <summary>
 	///		A reference to a list of Agents.
@@ -51,18 +49,18 @@ struct AgentUpdateContext {
 class Agent {
 protected:
 	// -- Agent Transform Properties -- //
-	sf::Vector2f m_position;
-	sf::Vector2f m_velocity;
-	sf::Angle m_rotation;
+	sf::Vector2f m_position{ 0.0f, 0.0f };
+	sf::Vector2f m_velocity{ 0.0f, 0.0f };
+	sf::Angle m_rotation{ sf::degrees(0) };
 	// -- //
 
 	// -- Agent Movement Properties -- //
-	float m_maxSpeed;
-	float m_maxForce;
+	float m_maxSpeed{ 100.0f };
+	float m_maxForce{ 10.0f };
 	// -- //
 
 	// -- Agent Rendering Properties -- //
-	sf::ConvexShape m_shape;
+	sf::ConvexShape m_shape{ 0 };
 	// -- //
 
 public:

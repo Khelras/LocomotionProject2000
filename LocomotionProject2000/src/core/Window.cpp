@@ -11,10 +11,12 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "locomotionproject2000/core/Window.h"
+#include "locomotionproject2000/core/Settings.h"
 
 Window::Window() {
 	// Default Window Properties
-	sf::VideoMode defaultMode({ 1200, 800 });
+	Settings& settings = Settings::getInstance();
+	sf::VideoMode defaultMode({ settings.windowWidth, settings.windowHeight });
 	sf::String defaultName = "Locomotion Project 2000!";
 
 	// Create an SFML RenderWindow
