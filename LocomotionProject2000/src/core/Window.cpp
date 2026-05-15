@@ -3,7 +3,7 @@ Bachelor of Software Engineering
 Media Design School
 Auckland
 New Zealand
-(c) 2025 Media Design School
+(c) 2026 Media Design School
 File Name   : Window.cpp
 Description : Defines the Window Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol

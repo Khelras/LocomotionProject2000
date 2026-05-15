@@ -3,7 +3,7 @@ Bachelor of Software Engineering
 Media Design School
 Auckland
 New Zealand
-(c) 2025 Media Design School
+(c) 2026 Media Design School
 File Name   : Command.hpp
 Description : Declares and Defines the Command Class Interface and Template
 Author      : Angelo Joseph Arawiran Bohol

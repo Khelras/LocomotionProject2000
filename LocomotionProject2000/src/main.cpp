@@ -3,7 +3,7 @@ Bachelor of Software Engineering
 Media Design School
 Auckland
 New Zealand
-(c) 2025 Media Design School
+(c) 2026 Media Design School
 File Name   : main.cpp
 Description : The Main Thread. Starts and Executes the Locomotion Project 2000 SFML Application.
 Author      : Angelo Joseph Arawiran Bohol
