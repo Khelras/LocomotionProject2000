@@ -34,6 +34,8 @@ struct CommandContext {
 	SceneManager* sceneManager;
 };
 
+
+
 /// <summary>
 ///		Command class that links a raw SFML event to an action.
 /// </summary>

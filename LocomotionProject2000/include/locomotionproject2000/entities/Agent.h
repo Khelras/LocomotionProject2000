@@ -13,6 +13,29 @@ Mail        : angelo.bohol@mds.ac.nz
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
+
+/// <summary>
+///		Context required for the Agent's update() function.
+/// </summary>
+struct AgentUpdateContext {
+	/// <summary>
+	///		Delta Time as a floating-point.
+	/// </summary>
+	float dt;
+
+	/// <summary>
+	///		A reference to an SFML RenderWindow.
+	/// </summary>
+	sf::RenderWindow& window;
+
+	/// <summary>
+	///		A reference to a list of Agents.
+	/// </summary>
+	const std::vector<std::unique_ptr<Agent>>& agents;
+};
+
+
 
 /// <summary>
 ///		Agent class represents an entity in the world that can perform actions,
@@ -30,7 +53,7 @@ protected:
 	// -- Agent Transform Properties -- //
 	sf::Vector2f m_position;
 	sf::Vector2f m_velocity;
-	float m_rotation;
+	sf::Angle m_rotation;
 	// -- //
 
 	// -- Agent Movement Properties -- //
@@ -67,7 +90,14 @@ public:
 	/// 
 	/// <param name="dt">Delta Time as a floating-point.</param>
 	/// <param name="agents">Reference to a list of all agents in the simulation.</param>
-	virtual void update(float dt, const std::vector<Agent>& agents) = 0;
+	
+
+	/// <summary>
+	///		Update the Agent's state including movement, decision-making, and interactions.
+	/// </summary>
+	/// 
+	/// <param name="ctx">Revelant context for the update process.</param>
+	virtual void update(AgentUpdateContext ctx) = 0;
 
 	//==================================================
 	// BOID SETTER METHODS
@@ -80,6 +110,7 @@ public:
 	/// <param name="position">2D Position vector.</param>
 	void setPosition(const sf::Vector2f& position) {
 		this->m_position = position;
+		this->m_shape.setPosition(position);
 	}
 
 	/// <summary>
@@ -92,12 +123,13 @@ public:
 	}
 
 	/// <summary>
-	///		Set the Rotation of the Agent in degrees.
+	///		Set the Rotation of the Agent.
 	/// </summary>
 	/// 
-	/// <param name="rotation">Rotation in degrees.</param>
-	void setRotation(float rotation) {
+	/// <param name="rotation">Rotation of the Agent.</param>
+	void setRotation(sf::Angle rotation) {
 		this->m_rotation = rotation;
+		this->m_shape.setRotation(rotation);
 	}
 
 	/// <summary>
@@ -144,8 +176,8 @@ public:
 	///		Get the current Rotation of the Agent.
 	/// </summary>
 	/// 
-	/// <returns>Rotation in degrees.</returns>
-	float getRotation() const {
+	/// <returns>Rotation of the Agent.</returns>
+	sf::Angle getRotation() const {
 		return this->m_rotation;
 	}
 
