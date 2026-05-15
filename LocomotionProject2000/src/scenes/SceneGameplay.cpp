@@ -36,10 +36,35 @@ SceneGameplay::SceneGameplay() {
 			// DEBUG
 			std::cout << "Left-Mouse Button Pressed in context of Gameplay Scene!" << std::endl;
 
-			// Spawning a Boid at the Position of the Mouse
+			// Spawn a Boid at the Position of the Mouse
 			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
 			sf::Vector2f spawnPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 			this->m_agents.push_back(std::make_unique<Boid>(spawnPos, this->m_currentBehaviour));
+		}
+	});
+	// -- //
+
+	// -- Right Mouse Button Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Mouse Button Press, then check if the Mouse Button was the Right Mouse Button
+			if (const auto* key = event.getIf<sf::Event::MouseButtonPressed>()) {
+				return key->button == sf::Mouse::Button::Right;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Right-Mouse Button Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Spawn an Obstacle at the Position of the Mouse
+			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
+			sf::Vector2f spawnPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+			this->m_obstacles.emplace_back(spawnPos);
 		}
 	});
 	// -- //
@@ -268,7 +293,7 @@ void SceneGameplay::handleEvent(const sf::Event& event, const CommandContext& ct
 
 void SceneGameplay::update(float dt) {
 	// Agent Update Context
-	AgentUpdateContext ctx{ dt, this->m_agents };
+	AgentUpdateContext ctx{ dt, this->m_agents, this->m_obstacles };
 
 	// Loop through all the Agents
 	for (auto& agent : this->m_agents) {
@@ -288,5 +313,11 @@ void SceneGameplay::draw(sf::RenderWindow& window) {
 	for (auto& agent : this->m_agents) {
 		// Draw the Agent
 		window.draw(agent->getShape());
+	}
+
+	// Loop through all the Obstacles
+	for (auto& obstacle : this->m_obstacles) {
+		// Draw the Obstacle
+		window.draw(obstacle.getShape());
 	}
 }

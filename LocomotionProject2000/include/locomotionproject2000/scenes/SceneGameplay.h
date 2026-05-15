@@ -14,6 +14,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "Scene.h"
 #include "locomotionproject2000/entities/Boid.h"
+#include "locomotionproject2000/world/Obstacle.h"
 
 /// <summary>
 ///		The Gameplay Scene class.
@@ -27,6 +28,7 @@ private:
 	// -- Main Scene Properties -- //
 	BehaviourState m_currentBehaviour;
 	std::vector<std::unique_ptr<Agent>> m_agents;
+	std::vector<Obstacle> m_obstacles;
 	// -- //
 
 public:

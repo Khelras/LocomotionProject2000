@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2026 Media Design School
 File Name   : Agent.h
-Description : Declares the Agent Class Functions and Properties.
+Description : Declares and Defines the Agent Base Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
@@ -15,8 +15,9 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <vector>
 #include <memory>
 
-// Forward declaration of Agent for the AgentUpdateContext struct
+// Relevate Forward-Declared Classes for the AgentUpdateContext struct
 class Agent;
+class Obstacle;
 
 /// <summary>
 ///		Context required for the Agent's update() function.
@@ -31,6 +32,11 @@ struct AgentUpdateContext {
 	///		A reference to a list of Agents.
 	/// </summary>
 	const std::vector<std::unique_ptr<Agent>>& agents;
+
+	/// <summary>
+	///		A reference to a list of Obstacles.
+	/// </summary>
+	const std::vector<Obstacle>& obstacles;
 };
 
 
@@ -98,7 +104,65 @@ public:
 	virtual void update(AgentUpdateContext ctx) = 0;
 
 	//==================================================
-	// BOID SETTER METHODS
+	// AGENT GETTERS METHODS
+	//==================================================
+
+	/// <summary>
+	///		Get the current Position of the Agent.
+	/// </summary>
+	/// 
+	/// <returns>2D Position vector of the Agent.</returns>
+	sf::Vector2f getPosition() const {
+		return this->m_position;
+	}
+
+	/// <summary>
+	///		Get the current Velocity of the Agent.
+	/// </summary>
+	/// 
+	/// <returns>2D Velocity vector of the Agent.</returns>
+	sf::Vector2f getVelocity() const {
+		return this->m_velocity;
+	}
+
+	/// <summary>
+	///		Get the current Rotation of the Agent.
+	/// </summary>
+	/// 
+	/// <returns>Rotation of the Agent.</returns>
+	sf::Angle getRotation() const {
+		return this->m_rotation;
+	}
+
+	/// <summary>
+	///		Get the Maximum Speed of the Agent.
+	/// </summary>
+	/// 
+	/// <returns>Maximum Speed of the Agent.</returns>
+	float getMaxSpeed() const {
+		return this->m_maxSpeed;
+	}
+
+	/// <summary>
+	///		Get the Maximum Force of the Agent.
+	/// </summary>
+	/// 
+	/// <param name="maxForce">Maximum Force that can be applied to the Agent.</param>
+	float getMaxForce() const {
+		return this->m_maxForce;
+	}
+
+	/// <summary>
+	///		Get the Shape of the Agent.
+	/// </summary>
+	/// 
+	/// <returns>2D Shape of the Agent.</returns>
+	sf::ConvexShape getShape() const {
+		return this->m_shape;
+	}
+
+	//==================================================
+	// AGENT SETTER METHODS
 	//==================================================
 	
 	/// <summary>
@@ -146,63 +210,5 @@ public:
 	/// <param name="maxForce">Maximum Force that can be applied to the Agent.</param>
 	void setMaxForce(float maxForce) {
 		this->m_maxForce = maxForce;
-	}
-
-	//==================================================
-	// BOID GETTERS METHODS
-	//==================================================
-
-	/// <summary>
-	///		Get the current Position of the Agent.
-	/// </summary>
-	/// 
-	/// <returns>2D Position vector.</returns>
-	sf::Vector2f getPosition() const {
-		return this->m_position;
-	}
-
-	/// <summary>
-	///		Get the current Velocity of the Agent.
-	/// </summary>
-	/// 
-	/// <returns>2D Velocity vector.</returns>
-	sf::Vector2f getVelocity() const {
-		return this->m_velocity;
-	}
-
-	/// <summary>
-	///		Get the current Rotation of the Agent.
-	/// </summary>
-	/// 
-	/// <returns>Rotation of the Agent.</returns>
-	sf::Angle getRotation() const {
-		return this->m_rotation;
-	}
-
-	/// <summary>
-	///		Get the Maximum Speed of the Agent.
-	/// </summary>
-	/// 
-	/// <returns>Maximum Speed of the Agent.	</returns>
-	float getMaxSpeed() const {
-		return this->m_maxSpeed;
-	}
-	
-	/// <summary>
-	///		Get the Maximum Force of the Agent.
-	/// </summary>
-	/// 
-	/// <param name="maxForce">Maximum Force that can be applied to the Agent.</param>
-	float getMaxForce() const {
-		return this->m_maxForce;
-	}
-
-	/// <summary>
-	///		Get the Shape of the Agent.
-	/// </summary>
-	/// 
-	/// <returns>Shape of the Agent.</returns>
-	sf::ConvexShape getShape() const {
-		return this->m_shape;
 	}
 };

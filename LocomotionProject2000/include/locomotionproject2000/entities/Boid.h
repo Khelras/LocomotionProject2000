@@ -45,10 +45,11 @@ public:
 	Boid();
 
 	/// <summary>
-	///		Constructor with an initial position.
+	///		Constructor with an initial position and movement behaviour.
 	/// </summary>
 	/// 
-	/// <param name="position">Initial position of the Boid.</param>
+	/// <param name="position">Initial 2D position vector.</param>
+	/// <param name="movementBehaviour">Initial Movement Behaviour.</param>
 	Boid(sf::Vector2f position, BehaviourState movementBehaviour);
 
 	/// <summary>
