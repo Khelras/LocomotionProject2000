@@ -13,6 +13,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #pragma once
 
 #include "Scene.h"
+#include "locomotionproject2000/entities/Boid.h"
 
 /// <summary>
 ///		The Gameplay Scene class.
@@ -24,7 +25,7 @@ private:
 	// -- //
 
 	// -- Main Scene Properties -- //
-
+	std::vector<std::unique_ptr<Agent>> m_agents;
 	// -- //
 
 public:

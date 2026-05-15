@@ -11,7 +11,6 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
-#include <memory>
 #include <string>
 #include <map>
 #include <stack>

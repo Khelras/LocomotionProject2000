@@ -32,8 +32,11 @@ SceneGameplay::SceneGameplay() {
 		[this](const CommandContext& ctx) {
 			// DEBUG
 			std::cout << "Left-Mouse-Button Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Spawning a Boid at the Position of the Mouse
 			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
-			std::cout << "Mouse Position: (" << mousePos.x << ", " << mousePos.y << ")" << std::endl;
+			sf::Vector2f spawnPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+			this->m_agents.push_back(std::make_unique<Boid>(spawnPos));
 		}
 	});
 	// -- //
@@ -54,7 +57,20 @@ void SceneGameplay::handleEvent(const sf::Event& event, const CommandContext& ct
 }
 
 void SceneGameplay::update(float dt) {
+	// Agent Update Context
+	AgentUpdateContext ctx{ dt, this->m_agents };
+
+	// Loop through all the Agents
+	for (auto& agent : this->m_agents) {
+		// Update Agent State
+		agent->update(ctx);
+	}
 }
 
 void SceneGameplay::draw(sf::RenderWindow& window) {
+	// Loop through all the Agents
+	for (auto& agent : this->m_agents) {
+		// Draw the Agent
+		window.draw(agent->getShape());
+	}
 }

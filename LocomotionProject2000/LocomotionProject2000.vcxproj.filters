@@ -30,6 +30,9 @@
     <Filter Include="Source Files\Scenes\Main Menu Scene">
       <UniqueIdentifier>{a51df832-78dc-4115-a47e-1fc83355cad2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Boids">
+      <UniqueIdentifier>{c9166b54-bae6-4dec-973a-557dcad1aa55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -51,7 +54,7 @@
       <Filter>Source Files\Scenes\Gameplay Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\Boid.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities\Boids</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="include\locomotionproject2000\entities\Agent.h">
       <Filter>Source Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\locomotionproject2000\entities\Boid.h">
+      <Filter>Source Files\Entities\Boids</Filter>
     </ClInclude>
     <ClInclude Include="include\locomotionproject2000\core\Settings.h">
       <Filter>Source Files</Filter>
