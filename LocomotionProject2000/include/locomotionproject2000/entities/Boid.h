@@ -13,20 +13,27 @@ Mail        : angelo.bohol@mds.ac.nz
 #pragma once
 #include "Agent.h"
 
+/// <summary>
+///		Movement Behaviour States of the Boids.
+/// </summary>
+enum class BehaviourState {
+	NONE = 0,
+	SEEK = 1,
+	FLEE = 2,
+	PURSUE = 3,
+	EVADE = 4,
+	WANDER = 5,
+	ARRIVAL = 6,
+	FLOCK = 7,
+	LEADER_FOLLOW = 8
+};
+
 class Boid: public Agent {
 private:
-	// -- Boid Behavior State Properties -- //
-	enum class BehaviorState {
-		SEEK = 1,
-		FLEE = 2,
-		PURSUE = 3,
-		EVADE = 4,
-		WANDER = 5,
-		ARRIVAL = 6,
-		FLOCK = 7,
-		LEADER_FOLLOW = 8
-	} m_currentBehavior;
+	// -- Boid Behaviour State Properties -- //
+	BehaviourState m_currentBehaviour;
 	// -- //
+
 public:
 	//==================================================
 	// CONSTRUCTOR AND DESTRUCTOR
@@ -42,7 +49,7 @@ public:
 	/// </summary>
 	/// 
 	/// <param name="position">Initial position of the Boid.</param>
-	Boid(sf::Vector2f position);
+	Boid(sf::Vector2f position, BehaviourState movementBehaviour);
 
 	/// <summary>
 	///     Destructor.
@@ -59,4 +66,61 @@ public:
 	/// 
 	/// <param name="ctx">Revelant context for the update process.</param>
 	void update(AgentUpdateContext ctx) override;
+
+	/// <summary>
+	///		Set the Movement Behavior State of the Boid.
+	/// </summary>
+	/// 
+	/// <param name="movementBehaviour">Movement Behavior State.</param>
+	void setMovementBehaviour(BehaviourState movementBehaviour);
+
+private:
+	//==================================================
+	// BOID MOVEMENT BEHAVIOUR METHODS
+	//==================================================
+
+	/// <summary>
+	///		No Movement Behaviour. Simply move forward.
+	/// </summary>
+	void none(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Seek Movement Behaviour.
+	/// </summary>
+	void seek(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Flee Movement Behaviour.
+	/// </summary>
+	void flee(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Pursue Movement Behaviour.
+	/// </summary>
+	void pursue(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Flee Movement Behaviour.
+	/// </summary>
+	void evade(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Wander Movement Behaviour.
+	/// </summary>
+	void wander(AgentUpdateContext ctx);
+
+	/// <Arrival>
+	///		Flee Movement Behaviour.
+	/// </summary>
+	void arrival(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Flock Movement Behaviour.
+	/// </summary>
+	void flock(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Follow the Leader Movement Behaviour.
+	/// </summary>
+	void leaderFollow(AgentUpdateContext ctx);
 };

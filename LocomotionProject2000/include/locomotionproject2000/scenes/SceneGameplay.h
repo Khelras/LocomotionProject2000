@@ -25,6 +25,7 @@ private:
 	// -- //
 
 	// -- Main Scene Properties -- //
+	BehaviourState m_currentBehaviour;
 	std::vector<std::unique_ptr<Agent>> m_agents;
 	// -- //
 

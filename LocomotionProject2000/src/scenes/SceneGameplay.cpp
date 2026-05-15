@@ -16,6 +16,9 @@ SceneGameplay::SceneGameplay() {
 	// Background Color
 	this->m_backgroundColor = sf::Color::Black;
 
+	// Default Movement Behaviour
+	this->m_currentBehaviour = BehaviourState::NONE;
+
 	// -- Left Mouse Button Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria
@@ -31,12 +34,219 @@ SceneGameplay::SceneGameplay() {
 		// Command Action
 		[this](const CommandContext& ctx) {
 			// DEBUG
-			std::cout << "Left-Mouse-Button Pressed in context of Gameplay Scene!" << std::endl;
+			std::cout << "Left-Mouse Button Pressed in context of Gameplay Scene!" << std::endl;
 
 			// Spawning a Boid at the Position of the Mouse
 			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
 			sf::Vector2f spawnPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-			this->m_agents.push_back(std::make_unique<Boid>(spawnPos));
+			this->m_agents.push_back(std::make_unique<Boid>(spawnPos, this->m_currentBehaviour));
+		}
+	});
+	// -- //
+
+	// -- Number 0 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 0 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num0;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-0 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to None for all Boids
+			this->m_currentBehaviour = BehaviourState::NONE;
+		}
+	});
+	// -- //
+
+	// -- Number 1 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 1 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num1;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-1 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Seek for all Boids
+			this->m_currentBehaviour = BehaviourState::SEEK;
+		}
+	});
+	// -- //
+
+	// -- Number 2 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 2 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num2;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-2 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Flee for all Boids
+			this->m_currentBehaviour = BehaviourState::FLEE;
+		}
+	});
+	// -- //
+
+	// -- Number 3 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 3 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num3;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-3 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Pursue for all Boids
+			this->m_currentBehaviour = BehaviourState::PURSUE;
+		}
+	});
+	// -- //
+
+	// -- Number 4 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 4 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num4;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-4 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Evade for all Boids
+			this->m_currentBehaviour = BehaviourState::EVADE;
+		}
+	});
+	// -- //
+
+	// -- Number 5 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 5 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num5;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-5 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Wander for all Boids
+			this->m_currentBehaviour = BehaviourState::WANDER;
+		}
+	});
+	// -- //
+
+	// -- Number 6 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 6 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num6;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-6 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Arrival for all Boids
+			this->m_currentBehaviour = BehaviourState::ARRIVAL;
+		}
+	});
+	// -- //
+
+	// -- Number 7 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 7 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num7;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-7 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Flock for all Boids
+			this->m_currentBehaviour = BehaviourState::FLOCK;
+		}
+	});
+	// -- //
+
+	// -- Number 8 Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Number 8 Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Num8;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Num-8 Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Set the Movement Behaviour to Leader-Follow for all Boids
+			this->m_currentBehaviour = BehaviourState::ARRIVAL;
 		}
 	});
 	// -- //
@@ -62,6 +272,12 @@ void SceneGameplay::update(float dt) {
 
 	// Loop through all the Agents
 	for (auto& agent : this->m_agents) {
+		// Attempt to Dynamic Cast to Boids
+		if (Boid* boid = dynamic_cast<Boid*>(agent.get())) {
+			// Update the Movement Behaviour of the Boid
+			boid->setMovementBehaviour(this->m_currentBehaviour);
+		}
+
 		// Update Agent State
 		agent->update(ctx);
 	}

@@ -190,6 +190,7 @@
   <ItemGroup>
     <ClCompile Include="include\locomotionproject2000\scenes\SceneGameplay.h" />
     <ClCompile Include="src\entities\Boid.cpp" />
+    <ClCompile Include="src\entities\BoidMovement.cpp" />
     <ClCompile Include="src\scenes\SceneGameplay.cpp" />
     <ClCompile Include="src\scenes\SceneManager.cpp" />
     <ClCompile Include="src\core\Window.cpp" />
