@@ -16,8 +16,8 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <map>
 #include <stack>
 
-#include "locomotionproject2000/scenes/SceneMainMenu.h"
-#include "locomotionproject2000/scenes/SceneGameplay.h"
+#include "SceneMainMenu.h"
+#include "SceneGameplay.h"
 
 /// <summary>
 ///		SceneManager class is responsible for managing various scenes and 

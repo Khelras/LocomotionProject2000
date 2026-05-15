@@ -18,11 +18,17 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{ff00736a-db2f-470f-a2a7-8e565106957c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scenes\Main Scene">
-      <UniqueIdentifier>{a51df832-78dc-4115-a47e-1fc83355cad2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{964cf2b3-b223-41b0-8e95-112718baec09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{d08a4993-2f41-4030-afa7-45aa9aca55f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\Gameplay Scene">
+      <UniqueIdentifier>{b6d779bd-24f7-4cd2-b0f7-0345d9db9bef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\Main Menu Scene">
+      <UniqueIdentifier>{a51df832-78dc-4115-a47e-1fc83355cad2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,7 +36,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\scenes\SceneMainMenu.cpp">
-      <Filter>Source Files\Scenes\Main Scene</Filter>
+      <Filter>Source Files\Scenes\Main Menu Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\scenes\SceneManager.cpp">
       <Filter>Source Files\Managers</Filter>
@@ -38,10 +44,13 @@
     <ClCompile Include="src\core\Window.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\SceneGameplay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="include\locomotionproject2000\scenes\SceneGameplay.h">
+      <Filter>Source Files\Scenes\Gameplay Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\SceneGameplay.cpp">
+      <Filter>Source Files\Scenes\Gameplay Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\Boid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,7 +59,7 @@
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="include\locomotionproject2000\scenes\SceneMainMenu.h">
-      <Filter>Source Files\Scenes\Main Scene</Filter>
+      <Filter>Source Files\Scenes\Main Menu Scene</Filter>
     </ClInclude>
     <ClInclude Include="include\locomotionproject2000\scenes\SceneManager.h">
       <Filter>Source Files\Managers</Filter>
@@ -60,6 +69,9 @@
     </ClInclude>
     <ClInclude Include="include\locomotionproject2000\core\Window.h">
       <Filter>Source Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="include\locomotionproject2000\entities\Agent.h">
+      <Filter>Source Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

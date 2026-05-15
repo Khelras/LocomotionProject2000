@@ -35,12 +35,12 @@ public:
     //==================================================
 
     /// <summary>
-    ///     Constructor.
+    ///     Default Constructor.
     /// </summary>
     Scene() = default;
 
     /// <summary>
-    ///     Virtual destructor for safe polymorphic destruction.
+    ///     Virtual Destructor for safe polymorphic destruction.
     /// </summary>
     virtual ~Scene() = default;
 

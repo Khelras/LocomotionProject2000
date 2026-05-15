@@ -12,7 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 
-#include "locomotionproject2000/scenes/Scene.h"
+#include "Scene.h"
 
 /// <summary>
 ///		The Main Menu Scene class.
@@ -43,7 +43,7 @@ public:
 	~SceneMainMenu();
 
 	//==================================================
-	// PRIMARY MAIN SCENE METHODS
+	// PRIMARY MAIN MENU SCENE METHODS
 	//==================================================
 
 	/// <summary>
