@@ -20,16 +20,17 @@ Boid::Boid() {
 
 Boid::Boid(sf::Vector2f position, BehaviourState movementBehaviour) : Boid() {
 	// Shape of the Boid
-	this->m_shape.setPointCount(3);
-	this->m_shape.setPoint(0, sf::Vector2f(20.0f, 0.0f)); // Tip
-	this->m_shape.setPoint(1, sf::Vector2f(-10.0f, 10.0f)); // Back-Left
-	this->m_shape.setPoint(2, sf::Vector2f(-10.0f, -10.0f)); // Back-Right
-	this->m_shape.setOrigin(sf::Vector2f(0.0f, 0.0f));
-	this->m_shape.setFillColor(sf::Color::White);
+	std::unique_ptr<sf::ConvexShape> convex = std::make_unique<sf::ConvexShape>(3);
+	convex->setPoint(0, sf::Vector2f(20.0f, 0.0f)); // Tip
+	convex->setPoint(1, sf::Vector2f(-10.0f, 10.0f)); // Back-Left
+	convex->setPoint(2, sf::Vector2f(-10.0f, -10.0f)); // Back-Right
+	convex->setOrigin(sf::Vector2f(0.0f, 0.0f));
+	convex->setFillColor(sf::Color::White);
+	this->m_shape = std::move(convex);
 
 	// Set the initial position
 	this->m_position = position;
-	this->m_shape.setPosition(position);
+	this->m_shape->setPosition(position);
 
 	// Set the Movement Behaviour State
 	this->m_currentBehaviour = movementBehaviour;
@@ -62,8 +63,8 @@ void Boid::update(AgentUpdateContext ctx) {
 	if (this->m_position.y > screenHeight) this->m_position.y = 0.0f; // Bottom to Top Wrapping
 
 	// Lastly, Update the Transform Properties of the Shape
-	this->m_shape.setPosition(this->m_position);
-	this->m_shape.setRotation(this->m_rotation);
+	this->m_shape->setPosition(this->m_position);
+	this->m_shape->setRotation(this->m_rotation);
 }
 
 void Boid::setMovementBehaviour(BehaviourState movementBehaviour) {

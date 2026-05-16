@@ -14,8 +14,10 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
+#include <utility>
 
 // Relevate Forward-Declared Classes for the AgentUpdateContext struct
+class Target;
 class Agent;
 class Obstacle;
 
@@ -27,6 +29,11 @@ struct AgentUpdateContext {
 	///		Delta Time as a floating-point.
 	/// </summary>
 	float dt;
+
+	/// <summary>
+	///		A reference to the Target
+	/// </summary>
+	const Target& target;
 
 	/// <summary>
 	///		A reference to a list of Agents.
@@ -66,7 +73,7 @@ protected:
 	// -- //
 
 	// -- Agent Rendering Properties -- //
-	sf::ConvexShape m_shape{ 0 };
+	std::unique_ptr<sf::Shape> m_shape;
 	// -- //
 
 public:
@@ -157,8 +164,8 @@ public:
 	/// </summary>
 	/// 
 	/// <returns>2D Shape of the Agent.</returns>
-	sf::ConvexShape getShape() const {
-		return this->m_shape;
+	sf::Shape* getShape() const {
+		return this->m_shape.get();
 	}
 
 	//==================================================
@@ -172,7 +179,7 @@ public:
 	/// <param name="position">2D Position vector.</param>
 	void setPosition(const sf::Vector2f& position) {
 		this->m_position = position;
-		this->m_shape.setPosition(position);
+		this->m_shape->setPosition(position);
 	}
 
 	/// <summary>
@@ -191,7 +198,7 @@ public:
 	/// <param name="rotation">Rotation of the Agent.</param>
 	void setRotation(sf::Angle rotation) {
 		this->m_rotation = rotation;
-		this->m_shape.setRotation(rotation);
+		this->m_shape->setRotation(rotation);
 	}
 
 	/// <summary>

@@ -15,8 +15,9 @@ Mail        : angelo.bohol@mds.ac.nz
 Obstacle::Obstacle() {
 	// Default Properties
 	this->m_position = sf::Vector2f(0.0f, 0.0f);
-	this->m_shape.setPosition(this->m_position);
 	this->m_shape.setRadius(20);
+	this->m_shape.setOrigin(this->m_shape.getGeometricCenter());
+	this->m_shape.setPosition(this->m_position);
 	this->m_shape.setFillColor(sf::Color::Red);
 }
 

@@ -52,7 +52,7 @@ public:
 	//==================================================
 
 	// -- Window Size Settings -- //
-	unsigned int windowWidth = 1200;
-	unsigned int windowHeight = 800;
+	const unsigned int windowWidth = 1200;
+	const unsigned int windowHeight = 800;
 	// -- //
 };

@@ -11,10 +11,16 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "locomotionproject2000/scenes/SceneGameplay.h"
+#include "locomotionproject2000/core/Settings.h";
 
 SceneGameplay::SceneGameplay() {
 	// Background Color
 	this->m_backgroundColor = sf::Color::Black;
+
+	// Center the Target
+	float centerX = static_cast<float>(Settings::getInstance().windowWidth) / 2.0f;
+	float centerY = static_cast<float>(Settings::getInstance().windowHeight) / 2.0f;
+	this->m_target.setPosition(sf::Vector2f(centerX, centerY));
 
 	// Default Movement Behaviour
 	this->m_currentBehaviour = BehaviourState::NONE;
@@ -44,6 +50,31 @@ SceneGameplay::SceneGameplay() {
 	});
 	// -- //
 
+	// -- Middle Mouse Button Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Mouse Button Press, then check if the Mouse Button was the Middle Mouse Button
+			if (const auto* key = event.getIf<sf::Event::MouseButtonPressed>()) {
+				return key->button == sf::Mouse::Button::Middle;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Middle-Mouse Button Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Move the Target to the Position of the Mouse
+			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
+			sf::Vector2f newPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+			this->m_target.setPosition(newPos);
+		}
+	});
+	// -- //
+
 	// -- Right Mouse Button Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria
@@ -65,6 +96,31 @@ SceneGameplay::SceneGameplay() {
 			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
 			sf::Vector2f spawnPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 			this->m_obstacles.emplace_back(spawnPos);
+		}
+	});
+	// -- //
+
+	// -- Space Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the Space Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Space;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Space Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Toggle the Movement Behaviour of the Target
+			BehaviourState state = (this->m_target.getMovementBehaviour() == BehaviourState::NONE) 
+				? BehaviourState::WANDER : BehaviourState::NONE;
+			this->m_target.setMovementBehaviour(state);
 		}
 	});
 	// -- //
@@ -293,7 +349,7 @@ void SceneGameplay::handleEvent(const sf::Event& event, const CommandContext& ct
 
 void SceneGameplay::update(float dt) {
 	// Agent Update Context
-	AgentUpdateContext ctx{ dt, this->m_agents, this->m_obstacles };
+	AgentUpdateContext ctx{ dt, this->m_target, this->m_agents, this->m_obstacles };
 
 	// Loop through all the Agents
 	for (auto& agent : this->m_agents) {
@@ -312,8 +368,11 @@ void SceneGameplay::draw(sf::RenderWindow& window) {
 	// Loop through all the Agents
 	for (auto& agent : this->m_agents) {
 		// Draw the Agent
-		window.draw(agent->getShape());
+		window.draw(*agent->getShape());
 	}
+
+	// Draw the Target
+	window.draw(*this->m_target.getShape());
 
 	// Loop through all the Obstacles
 	for (auto& obstacle : this->m_obstacles) {

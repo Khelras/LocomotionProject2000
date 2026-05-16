@@ -197,6 +197,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scenes\SceneMainMenu.cpp" />
     <ClCompile Include="src\world\Obstacle.cpp" />
+    <ClCompile Include="src\entities\Target.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\locomotionproject2000\core\Command.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="include\locomotionproject2000\scenes\Scene.h" />
     <ClInclude Include="include\locomotionproject2000\scenes\SceneMainMenu.h" />
     <ClInclude Include="include\locomotionproject2000\world\Obstacle.h" />
+    <ClInclude Include="include\locomotionproject2000\entities\Target.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

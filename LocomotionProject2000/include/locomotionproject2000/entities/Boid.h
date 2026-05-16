@@ -30,7 +30,7 @@ enum class BehaviourState {
 
 class Boid: public Agent {
 private:
-	// -- Boid Behaviour State Properties -- //
+	// -- Boid Properties -- //
 	BehaviourState m_currentBehaviour;
 	// -- //
 
@@ -69,10 +69,10 @@ public:
 	void update(AgentUpdateContext ctx) override;
 
 	/// <summary>
-	///		Set the Movement Behavior State of the Boid.
+	///		Set the Movement Behaviour State of the Boid.
 	/// </summary>
 	/// 
-	/// <param name="movementBehaviour">Movement Behavior State.</param>
+	/// <param name="movementBehaviour">Movement Behaviour State.</param>
 	void setMovementBehaviour(BehaviourState movementBehaviour);
 
 private:

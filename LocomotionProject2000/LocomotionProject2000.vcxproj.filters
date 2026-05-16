@@ -36,6 +36,9 @@
     <Filter Include="Source Files\Obstacles">
       <UniqueIdentifier>{0a19ec6f-96f8-48c5-a86c-d13ad2e7284c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Target">
+      <UniqueIdentifier>{4f7a7d93-9973-4acb-a1b5-c2d370bc9c47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -65,6 +68,9 @@
     <ClCompile Include="src\world\Obstacle.cpp">
       <Filter>Source Files\Obstacles</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\Target.cpp">
+      <Filter>Source Files\Entities\Target</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\locomotionproject2000\scenes\Scene.h">
@@ -93,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="include\locomotionproject2000\world\Obstacle.h">
       <Filter>Source Files\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="include\locomotionproject2000\entities\Target.h">
+      <Filter>Source Files\Entities\Target</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #pragma once
 
 #include "Scene.h"
-#include "locomotionproject2000/entities/Boid.h"
+#include "locomotionproject2000/entities/Target.h"
 #include "locomotionproject2000/world/Obstacle.h"
 
 /// <summary>
@@ -27,6 +27,7 @@ private:
 
 	// -- Main Scene Properties -- //
 	BehaviourState m_currentBehaviour;
+	Target m_target;
 	std::vector<std::unique_ptr<Agent>> m_agents;
 	std::vector<Obstacle> m_obstacles;
 	// -- //
