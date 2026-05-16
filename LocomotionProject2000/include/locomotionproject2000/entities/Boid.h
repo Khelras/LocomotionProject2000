@@ -81,11 +81,6 @@ private:
 	//==================================================
 
 	/// <summary>
-	///		No Movement Behaviour. Simply move forward.
-	/// </summary>
-	void none(AgentUpdateContext ctx);
-
-	/// <summary>
 	///		Seek Movement Behaviour.
 	/// </summary>
 	void seek(AgentUpdateContext ctx);

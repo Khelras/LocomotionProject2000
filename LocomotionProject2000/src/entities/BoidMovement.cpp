@@ -15,7 +15,10 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "locomotionproject2000/entities/Boid.h"
 
-void Boid::none(AgentUpdateContext ctx) {
+void Boid::seek(AgentUpdateContext ctx) {
+	// DEBUG
+	std::cout << "Performing 'Seek' Movement Behavior." << std::endl;
+
 	// -- Simple Straight-Line Movement -- //
 	// Forward Direction Vector from the Rotation
 	float radians = this->m_rotation.asRadians();
@@ -27,11 +30,6 @@ void Boid::none(AgentUpdateContext ctx) {
 	// Apply the Velocity Vector and Perform Movement
 	this->m_position += this->m_velocity * ctx.dt;
 	// -- //
-}
-
-void Boid::seek(AgentUpdateContext ctx) {
-	// DEBUG
-	std::cout << "Performing 'Seek' Movement Behavior." << std::endl;
 }
 
 void Boid::flee(AgentUpdateContext ctx) {

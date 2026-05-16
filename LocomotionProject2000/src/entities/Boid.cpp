@@ -42,7 +42,6 @@ Boid::~Boid() {
 void Boid::update(AgentUpdateContext ctx) {
 	// Switch-Case for the Movement Behaviour
 	switch (this->m_currentBehaviour) {
-		case BehaviourState::NONE: this->none(ctx); break; // Simple Forward Movement
 		case BehaviourState::SEEK: this->seek(ctx); break; // Seek Momvement Behaviour
 		case BehaviourState::FLEE: this->flee(ctx); break; // Flee Momvement Behaviour
 		case BehaviourState::PURSUE: this->pursue(ctx); break; // Pursue Momvement Behaviour
@@ -51,7 +50,7 @@ void Boid::update(AgentUpdateContext ctx) {
 		case BehaviourState::ARRIVAL: this->arrival(ctx); break; // Arrival Momvement Behaviour
 		case BehaviourState::FLOCK: this->flock(ctx); break; // Flock Momvement Behaviour
 		case BehaviourState::LEADER_FOLLOW: this->leaderFollow(ctx); break; // Follow the Leader Momvement Behaviour
-		default: this->none(ctx); break; // Default to Simple Forward Movement
+		default: break; // Default
 	}
 
 	// Afterwards, Border Wrapping

@@ -11,7 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "locomotionproject2000/scenes/SceneGameplay.h"
-#include "locomotionproject2000/core/Settings.h";
+#include "locomotionproject2000/core/Settings.h"
 
 SceneGameplay::SceneGameplay() {
 	// Background Color
@@ -350,6 +350,9 @@ void SceneGameplay::handleEvent(const sf::Event& event, const CommandContext& ct
 void SceneGameplay::update(float dt) {
 	// Agent Update Context
 	AgentUpdateContext ctx{ dt, this->m_target, this->m_agents, this->m_obstacles };
+
+	// Update Target State
+	this->m_target.update(ctx);
 
 	// Loop through all the Agents
 	for (auto& agent : this->m_agents) {
