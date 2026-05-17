@@ -22,7 +22,7 @@ void Boid::seek(AgentUpdateContext ctx) {
 
 	// Calculate our Desired Velocity
 	sf::Vector2f targetPos = ctx.target.getPosition();
-	sf::Vector2f desiredVelocity = (targetPos - this->m_position).normalized() * this->m_maxSpeed;
+	sf::Vector2f desiredVelocity = this->getShortestPathVector(this->m_position, targetPos).normalized() * this->m_maxSpeed;
 
 	// Calculate the Steering Force
 	sf::Vector2f steering = desiredVelocity - this->m_velocity;
