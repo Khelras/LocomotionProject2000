@@ -24,10 +24,11 @@ Boid::Boid() {
 
 Boid::Boid(sf::Vector2f position, BehaviourState movementBehaviour) : Boid() {
 	// Shape of the Boid
-	std::unique_ptr<sf::ConvexShape> convex = std::make_unique<sf::ConvexShape>(3);
+	std::unique_ptr<sf::ConvexShape> convex = std::make_unique<sf::ConvexShape>(4);
 	convex->setPoint(0, sf::Vector2f(20.0f, 0.0f)); // Tip
 	convex->setPoint(1, sf::Vector2f(-10.0f, 10.0f)); // Back-Left
-	convex->setPoint(2, sf::Vector2f(-10.0f, -10.0f)); // Back-Right
+	convex->setPoint(2, sf::Vector2f(-5.0f, 0.0f)); // Back-Middle
+	convex->setPoint(3, sf::Vector2f(-10.0f, -10.0f)); // Back-Right
 	convex->setOrigin(sf::Vector2f(0.0f, 0.0f));
 	convex->setFillColor(sf::Color::White);
 	this->m_shape = std::move(convex);
@@ -72,6 +73,11 @@ void Boid::update(AgentUpdateContext ctx) {
 	if (this->m_position.x > screenWidth) this->m_position.x -= screenWidth; // Right to Left Wrapping
 	if (this->m_position.y < 0.0f) this->m_position.y += screenHeight; // Top to Bottom Wrapping
 	if (this->m_position.y > screenHeight) this->m_position.y -= screenHeight; // Bottom to Top Wrapping
+
+	// Update the Shape Angle of the Boid
+	sf::Vector2f forward = (this->m_velocity.lengthSquared() == 0.0f) ? sf::Vector2f(1.0f, 0.0f) : this->m_velocity.normalized();
+	sf::Angle angle = sf::radians(std::atan2f(forward.y, forward.x));
+	this->m_shape->setRotation(angle);
 
 	// Lastly, Update the Transform Properties of the Shape
 	this->m_shape->setPosition(this->m_position);
