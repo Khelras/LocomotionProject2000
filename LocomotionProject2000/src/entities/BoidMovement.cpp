@@ -68,6 +68,39 @@ void Boid::wander(AgentUpdateContext ctx) {
 void Boid::arrival(AgentUpdateContext ctx) {
 	// DEBUG
 	std::cout << "Performing 'Arrival' Movement Behavior." << std::endl;
+
+	// Calculate our Desired Velocity
+	sf::Vector2f targetPos = ctx.target.getPosition();
+	sf::Vector2f desiredVelocity = this->getShortestPathVector(this->m_position, targetPos);
+
+	// Slowing Down Radius (Kinematics Approximation)
+	float slowingRadius = (this->m_mass * (this->m_maxSpeed * this->m_maxSpeed)) / (2.0f * this->m_maxForce);
+	
+	// Check the Distance between the Boid and the Target
+	float distance = desiredVelocity.length();
+	if (distance < slowingRadius) {
+		// Check if it is VERY Close (Prevents Normalisation Errors on Zero-Vectors)
+		if (distance < 0.01f) {
+			this->m_velocity = sf::Vector2f(0.f, 0.f);
+			this->m_acceleration = sf::Vector2f(0.f, 0.f);
+			return;
+		}
+
+		// Slow Down
+		desiredVelocity = desiredVelocity.normalized() * this->m_maxSpeed * (distance / slowingRadius);
+	}
+	else {
+		// Max Desired Velocity
+		desiredVelocity = desiredVelocity.normalized() * this->m_maxSpeed;
+	}
+
+	// Calculate the Steering Force
+	sf::Vector2f steering = desiredVelocity - this->m_velocity;
+	steering = (steering.lengthSquared() > this->m_maxForce * this->m_maxForce)
+		? steering.normalized() * this->m_maxForce : steering;
+
+	// Cacluate the Acceleration (F = ma >> a = F/m)
+	this->m_acceleration += steering / this->m_mass;
 }
 
 void Boid::flock(AgentUpdateContext ctx) {
