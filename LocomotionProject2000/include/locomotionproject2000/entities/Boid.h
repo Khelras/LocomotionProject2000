@@ -32,6 +32,7 @@ class Boid: public Agent {
 private:
 	// -- Boid Properties -- //
 	BehaviourState m_currentBehaviour;
+	float m_wanderAngle;
 	// -- //
 
 public:

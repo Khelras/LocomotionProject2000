@@ -17,6 +17,9 @@ Mail        : angelo.bohol@mds.ac.nz
 Boid::Boid() {
 	// Default Behaviour
 	this->m_currentBehaviour = BehaviourState::NONE;
+
+	// Default Wander Angle of 0 
+	this->m_wanderAngle = 0.0f;
 }
 
 Boid::Boid(sf::Vector2f position, BehaviourState movementBehaviour) : Boid() {
