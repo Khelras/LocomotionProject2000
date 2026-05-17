@@ -77,18 +77,6 @@ public:
 
 private:
 	//==================================================
-	// BOID HELPER METHODS
-	//==================================================
-
-	/// <summary>
-	///		Get the Shortest "To and From" while accounting
-	///		for Border-Wrapping as a Traversal method.
-	/// </summary>
-	/// 
-	/// <returns>Shortest Path Vector.</returns>
-	sf::Vector2f getShortestPathVector(const sf::Vector2f& from, const sf::Vector2f& to);
-
-	//==================================================
 	// BOID MOVEMENT BEHAVIOUR METHODS
 	//==================================================
 

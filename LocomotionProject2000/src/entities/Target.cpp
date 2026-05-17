@@ -11,7 +11,6 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "locomotionproject2000/entities/Target.h"
-#include "locomotionproject2000/core/Settings.h"
 
 Target::Target() {
 	// Shape of the Target

@@ -13,7 +13,6 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <cmath>
 
 #include "locomotionproject2000/entities/Boid.h"
-#include "locomotionproject2000/core/Settings.h"
 
 Boid::Boid() {
 	// Default Behaviour
@@ -77,48 +76,4 @@ void Boid::update(AgentUpdateContext ctx) {
 
 void Boid::setMovementBehaviour(BehaviourState movementBehaviour) {
 	this->m_currentBehaviour = movementBehaviour;
-}
-
-sf::Vector2f Boid::getShortestPathVector(const sf::Vector2f& from, const sf::Vector2f& to) {
-	// Difference between To and From
-	sf::Vector2f shortestPath = to - from;
-
-	// Border-Wrapping Dimenions
-	float screenWidth = static_cast<float>(Settings::getInstance().windowWidth);
-	float screenHeight = static_cast<float>(Settings::getInstance().windowHeight);
-
-	// -- X-Axis Wrapping -- //
-	// Check if Euclidean Distance is Greater than Half of the Screen Width (Un-ideal form fo Travel)
-	if (std::abs(shortestPath.x) > (screenWidth / 2.0f)) {
-		// "To" is to the Right of "From"
-		if (shortestPath.x > 0.0f) {
-			// Therefore, "From" will Travel Left (into the Border and Wrap around) to reach "To"
-			shortestPath.x -= screenWidth;
-		}
-		// "To" is to the Left of "From"
-		else {
-			// Therefore, "From" will Travel Right (into the Border and Wrap around) to reach "To"
-			shortestPath.x += screenWidth;
-		}
-	}
-	// -- //
-
-	// -- Y-Axis Wrapping -- //
-		// Check if Euclidean Distance is Greater than Half of the Screen Height (Un-ideal form fo Travel)
-	if (std::abs(shortestPath.y) > (screenHeight / 2.0f)) {
-		// "To" is Below of "From"
-		if (shortestPath.y > 0.0f) {
-			// Therefore, "From" will Travel Upwards (into the Border and Wrap around) to reach "To"
-			shortestPath.y -= screenHeight;
-		}
-		// "To" is Above of "From"
-		else {
-			// Therefore, "From" will Travel Downwards (into the Border and Wrap around) to reach "To"
-			shortestPath.y += screenHeight;
-		}
-	}
-	// -- //
-
-	// Return the Ideal Traveling Vector
-	return shortestPath;
 }
