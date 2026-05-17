@@ -36,6 +36,18 @@ void Boid::seek(AgentUpdateContext ctx) {
 void Boid::flee(AgentUpdateContext ctx) {
 	// DEBUG
 	std::cout << "Performing 'Flee' Movement Behavior." << std::endl;
+
+	// Calculate our Desired Velocity
+	sf::Vector2f targetPos = ctx.target.getPosition();
+	sf::Vector2f desiredVelocity = this->getShortestPathVector(targetPos, this->m_position).normalized() * this->m_maxSpeed;
+
+	// Calculate the Steering Force
+	sf::Vector2f steering = desiredVelocity - this->m_velocity;
+	steering = (steering.lengthSquared() > this->m_maxForce * this->m_maxForce)
+		? steering.normalized() * this->m_maxForce : steering;
+
+	// Cacluate the Acceleration (F = ma >> a = F/m)
+	this->m_acceleration += steering / this->m_mass;
 }
 
 void Boid::pursue(AgentUpdateContext ctx) {

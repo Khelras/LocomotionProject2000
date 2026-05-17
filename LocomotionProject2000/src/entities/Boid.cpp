@@ -60,7 +60,7 @@ void Boid::update(AgentUpdateContext ctx) {
 		? this->m_velocity.normalized() * this->m_maxSpeed : this->m_velocity;
 
 	// Apply Velocity
-	this->m_position += this->m_velocity * 1.25f /*Scalar*/ * ctx.dt;
+	this->m_position += this->m_velocity * 1.4f /*Scalar*/ * ctx.dt;
 
 	// Apply Border Wrapping Rules
 	float screenWidth = static_cast<float>(Settings::getInstance().windowWidth);
