@@ -14,22 +14,23 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <cmath>
 
 #include "locomotionproject2000/entities/Boid.h"
+#include "locomotionproject2000/entities/Target.h"
 
 void Boid::seek(AgentUpdateContext ctx) {
 	// DEBUG
 	std::cout << "Performing 'Seek' Movement Behavior." << std::endl;
 
-	// -- Simple Straight-Line Movement -- //
-	// Forward Direction Vector from the Rotation
-	float radians = this->m_rotation.asRadians();
-	sf::Vector2f forward(std::cosf(radians), std::sinf(radians));
+	// Calculate our Desired Velocity
+	sf::Vector2f targetPos = ctx.target.getPosition();
+	sf::Vector2f desiredVelocity = (targetPos - this->m_position).normalized() * this->m_maxSpeed;
 
-	// Velocity Vector
-	this->m_velocity = forward * this->m_maxSpeed;
-
-	// Apply the Velocity Vector and Perform Movement
-	this->m_position += this->m_velocity * ctx.dt;
-	// -- //
+	// Calculate the Steering Force
+	sf::Vector2f steering = desiredVelocity - this->m_velocity;
+	steering = (steering.lengthSquared() > this->m_maxForce * this->m_maxForce)
+		? steering.normalized() * this->m_maxForce : steering;
+	
+	// Cacluate the Acceleration (F = ma >> a = F/m)
+	this->m_acceleration += steering / this->m_mass;
 }
 
 void Boid::flee(AgentUpdateContext ctx) {

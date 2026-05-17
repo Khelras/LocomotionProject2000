@@ -30,18 +30,6 @@ void Target::update(AgentUpdateContext ctx) {
 	// Check if the Movement Behaviour State is set to Wander
 	if (this->m_currentBehaviour == BehaviourState::WANDER) {
 		// TODO: Implement TRUE Target Wander Logic
-		
-		// -- Simple Straight-Line Movement -- //
-		// Forward Direction Vector from the Rotation
-		float radians = this->m_rotation.asRadians();
-		sf::Vector2f forward(std::cosf(radians), std::sinf(radians));
-
-		// Velocity Vector
-		this->m_velocity = forward * this->m_maxSpeed;
-
-		// Apply the Velocity Vector and Perform Movement
-		this->m_position += this->m_velocity * ctx.dt;
-		// -- //
 	}
 
 	// Afterwards, Border Wrapping
@@ -54,7 +42,6 @@ void Target::update(AgentUpdateContext ctx) {
 
 	// Lastly, Update the Transform Properties of the Shape
 	this->m_shape->setPosition(this->m_position);
-	this->m_shape->setRotation(this->m_rotation);
 }
 
 BehaviourState Target::getMovementBehaviour() const {

@@ -61,15 +61,13 @@ struct AgentUpdateContext {
 /// </summary>
 class Agent {
 protected:
-	// -- Agent Transform Properties -- //
+	// -- Agent Movement Properties -- 
 	sf::Vector2f m_position{ 0.0f, 0.0f };
 	sf::Vector2f m_velocity{ 0.0f, 0.0f };
-	sf::Angle m_rotation{ sf::degrees(0) };
-	// -- //
-
-	// -- Agent Movement Properties -- //
-	float m_maxSpeed{ 100.0f };
-	float m_maxForce{ 10.0f };
+	sf::Vector2f m_acceleration{ 0.0f, 0.0f };
+	float m_mass{ 1.0f };
+	float m_maxSpeed{ 150.0f };
+	float m_maxForce{ 100.0f };
 	// -- //
 
 	// -- Agent Rendering Properties -- //
@@ -133,12 +131,21 @@ public:
 	}
 
 	/// <summary>
-	///		Get the current Rotation of the Agent.
+	///		Get the current Acceleration of the Agent.
 	/// </summary>
 	/// 
-	/// <returns>Rotation of the Agent.</returns>
-	sf::Angle getRotation() const {
-		return this->m_rotation;
+	/// <returns>2D Acceleration vector of the Agent.</returns>
+	sf::Vector2f getAcceleration() const {
+		return this->m_acceleration;
+	}
+
+	/// <summary>
+	///		Get the Mass of the Agent.
+	/// </summary>
+	/// 
+	/// <returns>Mass of the Agent.</returns>
+	float getMass() const {
+		return this->m_mass;
 	}
 
 	/// <summary>
@@ -192,13 +199,21 @@ public:
 	}
 
 	/// <summary>
-	///		Set the Rotation of the Agent.
+	///		Set the Acceleration of the Agent
 	/// </summary>
 	/// 
-	/// <param name="rotation">Rotation of the Agent.</param>
-	void setRotation(sf::Angle rotation) {
-		this->m_rotation = rotation;
-		this->m_shape->setRotation(rotation);
+	/// <param name="acceleration">2D Acceleration vector.</param>
+	void setAcceleration(const sf::Vector2f& acceleration) {
+		this->m_acceleration = acceleration;
+	}
+
+	/// <summary>
+	///		Set the Mass of the Agent.
+	/// </summary>
+	/// 
+	/// <param name="mass">Mass of the Agent</param>
+	void setMass(const float& mass) {
+		this->m_mass = mass;
 	}
 
 	/// <summary>

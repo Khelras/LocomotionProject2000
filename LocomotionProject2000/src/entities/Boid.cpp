@@ -53,17 +53,25 @@ void Boid::update(AgentUpdateContext ctx) {
 		default: break; // Default
 	}
 
-	// Afterwards, Border Wrapping
+	// Apply Acceleration
+	this->m_velocity += this->m_acceleration * ctx.dt;
+	this->m_velocity = (this->m_velocity.lengthSquared() > this->m_maxSpeed * this->m_maxSpeed)
+		? this->m_velocity.normalized() * this->m_maxSpeed : this->m_velocity;
+
+	// Apply Velocity
+	this->m_position += this->m_velocity * 1.5f /*Scalar*/ * ctx.dt;
+
+	// Apply Border Wrapping Rules
 	float screenWidth = static_cast<float>(Settings::getInstance().windowWidth);
 	float screenHeight = static_cast<float>(Settings::getInstance().windowHeight);
-	if (this->m_position.x < 0.0f) this->m_position.x = screenWidth; // Left to Right Wrapping
-	if (this->m_position.x > screenWidth) this->m_position.x = 0.0f; // Right to Left Wrapping
-	if (this->m_position.y < 0.0f) this->m_position.y = screenHeight; // Top to Bottom Wrapping
-	if (this->m_position.y > screenHeight) this->m_position.y = 0.0f; // Bottom to Top Wrapping
+	if (this->m_position.x < 0.0f) this->m_position.x += screenWidth; // Left to Right Wrapping
+	if (this->m_position.x > screenWidth) this->m_position.x -= screenWidth; // Right to Left Wrapping
+	if (this->m_position.y < 0.0f) this->m_position.y += screenHeight; // Top to Bottom Wrapping
+	if (this->m_position.y > screenHeight) this->m_position.y -= screenHeight; // Bottom to Top Wrapping
 
 	// Lastly, Update the Transform Properties of the Shape
 	this->m_shape->setPosition(this->m_position);
-	this->m_shape->setRotation(this->m_rotation);
+	//this->m_acceleration = sf::Vector2f(0.0f, 0.0f);
 }
 
 void Boid::setMovementBehaviour(BehaviourState movementBehaviour) {

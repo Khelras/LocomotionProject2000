@@ -22,14 +22,14 @@ Window::Window() {
 	// Create an SFML RenderWindow
 	this->create(defaultMode, defaultName, sf::Style::Close);
 	this->m_resolution = defaultMode.size;
-	this->setFramerateLimit(30);
+	this->setFramerateLimit(60);
 }
 
 Window::Window(sf::VideoMode mode, const std::string& name) {
 	// Create an SFML RenderWindow
 	this->create(mode, name, sf::Style::Close);
 	this->m_resolution = mode.size;
-	this->setFramerateLimit(30);
+	this->setFramerateLimit(60);
 }
 
 Window::~Window() {
