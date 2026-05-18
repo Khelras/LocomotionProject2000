@@ -10,6 +10,7 @@ Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
+#include <iostream>
 #include <cmath>
 
 #include "locomotionproject2000/entities/Boid.h"
@@ -18,8 +19,9 @@ Boid::Boid() {
 	// Default Behaviour
 	this->m_currentBehaviour = BehaviourState::NONE;
 
-	// Default Wander Angle of 0 
+	// Default Values
 	this->m_wanderAngle = 0.0f;
+	this->m_detectionRadius = 100.0f;
 }
 
 Boid::Boid(sf::Vector2f position, BehaviourState movementBehaviour) : Boid() {
@@ -57,6 +59,29 @@ void Boid::update(AgentUpdateContext ctx) {
 		case BehaviourState::LEADER_FOLLOW: this->leaderFollow(ctx); break; // Follow the Leader Movement Behaviour
 		default: break; // Default
 	}
+
+
+
+	//  -- Obstacle Avoidance -- //
+	// Detect Nearby Obstacles
+	this->m_nearbyObstacles.clear();
+	for (Obstacle obstacle : ctx.obstacles) {
+		// Check if this Obstacle is within the Detection Radius
+		float within = this->m_detectionRadius + obstacle.getShape().getRadius();
+		float dx = obstacle.getPosition().x - this->m_position.x;
+		float dy = obstacle.getPosition().y - this->m_position.y;
+		float distance = std::sqrtf((dx * dx) + (dy * dy));
+		if (distance <= within) {
+			// Obstacle is Nearby
+			this->m_nearbyObstacles.push_back(obstacle);
+		}
+	}
+
+	// DEBUG
+	std::cout << "Nearby Obstacles: " << this->m_nearbyObstacles.size() << std::endl;
+	// -- //
+
+
 
 	// Apply Acceleration
 	this->m_velocity += this->m_acceleration * ctx.dt;

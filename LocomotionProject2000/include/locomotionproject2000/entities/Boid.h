@@ -11,7 +11,9 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+
 #include "Agent.h"
+#include "locomotionproject2000/world/Obstacle.h"
 
 /// <summary>
 ///		Movement Behaviour States of the Boids.
@@ -33,6 +35,8 @@ private:
 	// -- Boid Properties -- //
 	BehaviourState m_currentBehaviour;
 	float m_wanderAngle;
+	float m_detectionRadius;
+	std::vector<Obstacle> m_nearbyObstacles;
 	// -- //
 
 public:

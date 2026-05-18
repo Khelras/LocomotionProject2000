@@ -14,7 +14,6 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "Scene.h"
 #include "locomotionproject2000/entities/Target.h"
-#include "locomotionproject2000/world/Obstacle.h"
 
 /// <summary>
 ///		The Gameplay Scene class.

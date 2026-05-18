@@ -141,6 +141,7 @@ SceneGameplay::SceneGameplay() {
 	});
 	// -- //
 
+
 	// -- Space Key Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria
@@ -162,6 +163,29 @@ SceneGameplay::SceneGameplay() {
 			BehaviourState state = (this->m_target.getMovementBehaviour() == BehaviourState::NONE) 
 				? BehaviourState::WANDER : BehaviourState::NONE;
 			this->m_target.setMovementBehaviour(state);
+		}
+	});
+	// -- //
+
+	// -- C Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the C Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::C;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "C Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Clear the Obstacles List
+			this->m_obstacles.clear();
 		}
 	});
 	// -- //
