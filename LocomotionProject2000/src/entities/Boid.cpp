@@ -109,6 +109,22 @@ void Boid::update(AgentUpdateContext ctx) {
 	this->m_acceleration = sf::Vector2f(0.0f, 0.0f);
 }
 
+void Boid::draw(sf::RenderWindow& window) {
+	// Draw the Boid
+	window.draw(*this->m_shape.get());
+
+	// -- DEBUG Drawings -- //
+	// Dectection Circle
+	sf::CircleShape detectionCircle(this->m_detectionRadius);
+	detectionCircle.setFillColor(sf::Color(255, 0, 0, 25));
+	detectionCircle.setOutlineColor(sf::Color(255, 0, 0, 50));
+	detectionCircle.setOutlineThickness(-1.0f);
+	detectionCircle.setOrigin(detectionCircle.getGeometricCenter());
+	detectionCircle.setPosition(this->m_position);
+	window.draw(detectionCircle);
+	// -- //
+}
+
 void Boid::setMovementBehaviour(BehaviourState movementBehaviour) {
 	this->m_currentBehaviour = movementBehaviour;
 }

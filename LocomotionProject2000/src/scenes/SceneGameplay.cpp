@@ -439,11 +439,11 @@ void SceneGameplay::draw(sf::RenderWindow& window) {
 	// Loop through all the Agents
 	for (auto& agent : this->m_agents) {
 		// Draw the Agent
-		window.draw(*agent->getShape());
+		agent->draw(window);
 	}
 
 	// Draw the Target
-	window.draw(*this->m_target.getShape());
+	this->m_target.draw(window);
 
 	// Loop through all the Obstacles
 	for (auto& obstacle : this->m_obstacles) {

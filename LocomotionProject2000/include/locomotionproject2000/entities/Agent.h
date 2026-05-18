@@ -110,6 +110,13 @@ public:
 	/// <param name="ctx">Revelant context for the update process.</param>
 	virtual void update(AgentUpdateContext ctx) = 0;
 
+	/// <summary>
+	///		Draw the Agent to the given Window.
+	/// </summary>
+	/// 
+	/// <param name="window">Reference to the SFML Render Window.</param>
+	virtual void draw(sf::RenderWindow& window) = 0;
+
 	//==================================================
 	// AGENT GETTERS METHODS
 	//==================================================

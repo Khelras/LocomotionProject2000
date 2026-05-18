@@ -74,6 +74,13 @@ public:
 	void update(AgentUpdateContext ctx) override;
 
 	/// <summary>
+	///		Draw the Boid to the given Window.
+	/// </summary>
+	/// 
+	/// <param name="window">Reference to the SFML Render Window.</param>
+	void draw(sf::RenderWindow& window) override;
+
+	/// <summary>
 	///		Set the Movement Behaviour State of the Boid.
 	/// </summary>
 	/// 

@@ -95,6 +95,11 @@ void Target::update(AgentUpdateContext ctx) {
 	this->m_acceleration = sf::Vector2f(0.0f, 0.0f);
 }
 
+void Target::draw(sf::RenderWindow& window) {
+	// Draw the Target
+	window.draw(*this->m_shape.get());
+}
+
 BehaviourState Target::getMovementBehaviour() const {
 	return this->m_currentBehaviour;
 }
