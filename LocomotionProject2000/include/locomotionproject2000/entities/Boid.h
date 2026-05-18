@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include <random>
 
 #include "Agent.h"
 #include "locomotionproject2000/world/Obstacle.h"
@@ -33,10 +34,22 @@ private:
 	// -- Boid Properties -- //
 	BehaviourState m_currentBehaviour;
 	float m_wanderAngle;
+	// -- //
+
+	// -- Boid Object Avoidance Properties -- // 
 	float m_detectionRadius;
 	float m_detectionLength;
 	float m_detectionWidth;
 	std::vector<Obstacle> m_nearbyObstacles;
+	// -- //
+
+	// -- Boid Group Behaviour Properties -- // 
+	float m_desiredSeparation;
+	float m_neighbourDistance;
+	// -- // 
+
+	// -- Other -- // 
+	std::mt19937 m_rng{ std::random_device{}() };
 	// -- //
 
 public:
@@ -95,30 +108,79 @@ private:
 	/// <summary>
 	///		Seek Movement Behaviour.
 	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
 	void seek(AgentUpdateContext ctx);
 
 	/// <summary>
 	///		Flee Movement Behaviour.
 	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
 	void flee(AgentUpdateContext ctx);
 
 	/// <summary>
 	///		Wander Movement Behaviour.
 	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
 	void wander(AgentUpdateContext ctx);
 
 	/// <Arrival>
 	///		Flee Movement Behaviour.
 	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
 	void arrival(AgentUpdateContext ctx);
 
 	/// <summary>
 	///		Flock Movement Behaviour.
 	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
 	void flock(AgentUpdateContext ctx);
 
 	/// <summary>
 	///		Follow the Leader Movement Behaviour.
 	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
 	void leaderFollow(AgentUpdateContext ctx);
+
+	//==================================================
+	// BOID MOVEMENT BEHAVIOUR HELPER METHODS
+	//==================================================
+
+	/// <summary>
+	///		Get the Separation Steering Force.
+	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
+	/// 
+	/// <returns>
+	///		2D Separation Steering Force Vector.
+	/// </returns>
+	sf::Vector2f separation(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Get the Alignment Steering Force.
+	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
+	/// 
+	/// <returns>
+	///		2D Alignment Steering Force Vector.
+	/// </returns>
+	sf::Vector2f alignment(AgentUpdateContext ctx);
+
+	/// <summary>
+	///		Get the Cohesion Steering Force.
+	/// </summary>
+	/// 
+	/// <param name="ctx">Agent Update Context struct that holds relevant information.</param>
+	/// 
+	/// <returns>
+	///		2D Cohesion Steering Force Vector.
+	/// </returns>
+	sf::Vector2f cohesion(AgentUpdateContext ctx);
 };

@@ -19,14 +19,18 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "locomotionproject2000/core/Settings.h"
 
 Boid::Boid() {
-	// Default Behaviour
+	// Default Properties
 	this->m_currentBehaviour = BehaviourState::NONE;
-
-	// Default Values
 	this->m_wanderAngle = 0.0f;
+
+	// Object Avoidance Properties
 	this->m_detectionRadius = 300.0f;
 	this->m_detectionLength = 0.0f;
 	this->m_detectionWidth = 0.0f;
+	
+	// Group Behaviours Properties
+	this->m_desiredSeparation = 50.0f;
+	this->m_neighbourDistance = 200.0f;
 }
 
 Boid::Boid(sf::Vector2f position, BehaviourState movementBehaviour) : Boid() {
@@ -41,9 +45,7 @@ Boid::Boid(sf::Vector2f position, BehaviourState movementBehaviour) : Boid() {
 	this->m_shape = std::move(convex);
 
 	// Width of the Detection Box of the Boid (From the Back two Points of the Boid)
-	float dx = this->m_shape->getPoint(1).x - this->m_shape->getPoint(3).x;
-	float dy = this->m_shape->getPoint(1).y - this->m_shape->getPoint(3).y;
-	this->m_detectionWidth = std::sqrtf((dx * dx) + (dy * dy)) * 1.5f; // Extra for Safety\
+	this->m_detectionWidth = (this->m_shape->getPoint(1) - this->m_shape->getPoint(3)).length() * 1.5f; // Extra for Safety
 
 	// Set the initial position
 	this->m_position = position;
@@ -80,9 +82,7 @@ void Boid::update(AgentUpdateContext ctx) {
 
 		// Check if this Obstacle is within the Detection Radius
 		float within = this->m_detectionRadius + obstacle.getShape().getRadius();
-		float dx = obstacle.getPosition().x - this->m_position.x;
-		float dy = obstacle.getPosition().y - this->m_position.y;
-		float distance = std::sqrtf((dx * dx) + (dy * dy));
+		float distance = (obstacle.getPosition() - this->m_position).length();
 		if (distance <= within) {
 			// Obstacle is Nearby
 			this->m_nearbyObstacles.push_back(obstacle);
@@ -150,7 +150,7 @@ void Boid::update(AgentUpdateContext ctx) {
 			? steering.normalized() * maxSteeringForce : steering;
 
 		// Cacluate the Acceleration (F = ma >> a = F/m)
-		this->m_acceleration += steering / this->m_mass; // consistent with seek
+		this->m_acceleration += (steering * 3.0f) / this->m_mass; // consistent with seek
 	}
 
 	// Apply Acceleration
