@@ -36,6 +36,8 @@ private:
 	BehaviourState m_currentBehaviour;
 	float m_wanderAngle;
 	float m_detectionRadius;
+	float m_detectionLength;
+	float m_detectionWidth;
 	std::vector<Obstacle> m_nearbyObstacles;
 	// -- //
 

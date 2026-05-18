@@ -167,6 +167,29 @@ SceneGameplay::SceneGameplay() {
 	});
 	// -- //
 
+	// -- D Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the D Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::D;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "D Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Toggle the Debug Drawing Setting
+			Settings::getInstance().shouldDrawDebugs = (Settings::getInstance().shouldDrawDebugs) ? false : true;
+		}
+	});
+	// -- //
+
 	// -- C Key Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria

@@ -54,5 +54,6 @@ public:
 	// -- Window Size Settings -- //
 	const unsigned int windowWidth = 1200;
 	const unsigned int windowHeight = 800;
+	bool shouldDrawDebugs = false;
 	// -- //
 };

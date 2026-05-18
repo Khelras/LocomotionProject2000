@@ -19,7 +19,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 void Boid::seek(AgentUpdateContext ctx) {
 	// DEBUG
-	std::cout << "Performing 'Seek' Movement Behavior." << std::endl;
+	//std::cout << "Performing 'Seek' Movement Behavior." << std::endl;
 
 	// Calculate our Desired Velocity
 	sf::Vector2f targetPos = ctx.target.getPosition();
@@ -120,7 +120,7 @@ void Boid::arrival(AgentUpdateContext ctx) {
 		// Check if it is VERY Close (Prevents Normalisation Errors on Zero-Vectors)
 		if (distance < 0.01f) {
 			this->m_velocity = sf::Vector2f(0.f, 0.f);
-			this->m_acceleration = sf::Vector2f(0.f, 0.f);
+			//this->m_acceleration = sf::Vector2f(0.f, 0.f);
 			return;
 		}
 
