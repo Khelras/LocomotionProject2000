@@ -10,6 +10,8 @@ Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
+#include <cmath>
+
 #include "locomotionproject2000/scenes/SceneGameplay.h"
 #include "locomotionproject2000/core/Settings.h"
 
@@ -133,10 +135,40 @@ SceneGameplay::SceneGameplay() {
 			// DEBUG
 			std::cout << "Right-Mouse Button Pressed in context of Gameplay Scene!" << std::endl;
 
-			// Spawn an Obstacle at the Position of the Mouse
+			// Try to Spawn an Obstacle at the Position of the Mouse
 			sf::Vector2i mousePos = sf::Mouse::getPosition(ctx.window);
 			sf::Vector2f spawnPos(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-			this->m_obstacles.emplace_back(spawnPos);
+			Obstacle obstacle(spawnPos);
+			
+			// Check the Spawn Position of the Obstacle is Valid.
+			bool isValid = true;
+			std::queue<Obstacle> obstacles = this->m_obstacles;
+			float minDist = (obstacle.getShape().getRadius() * 2) * 2; // 2x Diameters of the Obstacle Shape
+			while (obstacles.empty() == false) {
+				// Get the Obstacle at the Front of the Queue
+				Obstacle other = obstacles.front();
+				obstacles.pop();
+
+				// Check the Distance between the two Obstacles
+				float dx = other.getPosition().x - obstacle.getPosition().x;
+				float dy = other.getPosition().y - obstacle.getPosition().y;
+				if (std::sqrt((dx * dx) + (dy * dy)) < minDist) {
+					isValid = false;
+					break;
+				}
+			}
+
+			// Spawn Position is Valid
+			if (isValid == true) {
+				// Check the how many Obstacles there are
+				if (this->m_obstacles.size() >= this->m_maxObstacles) {
+					// Remove the Obstacle at the Front of the Queue
+					this->m_obstacles.pop();
+				}
+
+				// Push to the back of the Queue
+				this->m_obstacles.push(obstacle);
+			}
 		}
 	});
 	// -- //
@@ -208,7 +240,9 @@ SceneGameplay::SceneGameplay() {
 			std::cout << "C Key Pressed in context of Gameplay Scene!" << std::endl;
 
 			// Clear the Obstacles List
-			this->m_obstacles.clear();
+			while (this->m_obstacles.empty() == false) {
+				this->m_obstacles.pop();
+			}
 		}
 	});
 	// -- //
@@ -469,9 +503,11 @@ void SceneGameplay::draw(sf::RenderWindow& window) {
 	this->m_target.draw(window);
 
 	// Loop through all the Obstacles
-	for (auto& obstacle : this->m_obstacles) {
+	std::queue<Obstacle> obstacles = this->m_obstacles;
+	while (obstacles.empty() == false) {
 		// Draw the Obstacle
-		window.draw(obstacle.getShape());
+		window.draw(obstacles.front().getShape());
+		obstacles.pop();
 	}
 
 	// Draw the UI Text

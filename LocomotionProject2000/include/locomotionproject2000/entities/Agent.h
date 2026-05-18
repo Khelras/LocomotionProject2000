@@ -13,6 +13,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <queue>
 #include <memory>
 #include <utility>
 
@@ -45,7 +46,7 @@ struct AgentUpdateContext {
 	/// <summary>
 	///		A reference to a list of Obstacles.
 	/// </summary>
-	const std::vector<Obstacle>& obstacles;
+	const std::queue<Obstacle>& obstacles;
 };
 
 

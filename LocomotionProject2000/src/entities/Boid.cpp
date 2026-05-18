@@ -67,12 +67,19 @@ void Boid::update(AgentUpdateContext ctx) {
 		case BehaviourState::ARRIVAL: this->arrival(ctx); break; // Arrival Movement Behaviour
 		case BehaviourState::FLOCK: this->flock(ctx); break; // Flock Movement Behaviour
 		case BehaviourState::LEADER_FOLLOW: this->leaderFollow(ctx); break; // Follow the Leader Movement Behaviour
-		default: break; // Default
+		default: {
+			// Stop
+			this->m_velocity = sf::Vector2f(0.0f, 0.0f);
+		} break; // Default
 	}
 
 	// Detect Nearby Obstacles
 	this->m_nearbyObstacles.clear();
-	for (Obstacle obstacle : ctx.obstacles) {
+	std::queue<Obstacle> obstacles = ctx.obstacles;
+	while (obstacles.empty() == false) {
+		// Get the first Obstacle in the Queue
+		Obstacle obstacle = obstacles.front();
+
 		// Check if this Obstacle is within the Detection Radius
 		float within = this->m_detectionRadius + obstacle.getShape().getRadius();
 		float dx = obstacle.getPosition().x - this->m_position.x;
@@ -82,6 +89,9 @@ void Boid::update(AgentUpdateContext ctx) {
 			// Obstacle is Nearby
 			this->m_nearbyObstacles.push_back(obstacle);
 		}
+
+		// Pop it out
+		obstacles.pop();
 	}
 
 	// Forward and Right Vectors for Local Space of boids

@@ -28,7 +28,8 @@ private:
 	BehaviourState m_currentBehaviour;
 	Target m_target;
 	std::vector<std::unique_ptr<Agent>> m_agents;
-	std::vector<Obstacle> m_obstacles;
+	std::queue<Obstacle> m_obstacles;
+	const unsigned int m_maxObstacles = 20;
 	// -- //
 
 	// -- Gameplay Scene UI -- //
