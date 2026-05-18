@@ -61,8 +61,6 @@ void Boid::update(AgentUpdateContext ctx) {
 	switch (this->m_currentBehaviour) {
 		case BehaviourState::SEEK: this->seek(ctx); break; // Seek Movement Behaviour
 		case BehaviourState::FLEE: this->flee(ctx); break; // Flee Movement Behaviour
-		case BehaviourState::PURSUE: this->pursue(ctx); break; // Pursue Movement Behaviour
-		case BehaviourState::EVADE: this->evade(ctx); break; // Evade Movement Behaviour
 		case BehaviourState::WANDER: this->wander(ctx); break; // Wander Movement Behaviour
 		case BehaviourState::ARRIVAL: this->arrival(ctx); break; // Arrival Movement Behaviour
 		case BehaviourState::FLOCK: this->flock(ctx); break; // Flock Movement Behaviour

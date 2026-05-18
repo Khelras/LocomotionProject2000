@@ -51,16 +51,6 @@ void Boid::flee(AgentUpdateContext ctx) {
 	this->m_acceleration += steering / this->m_mass;
 }
 
-void Boid::pursue(AgentUpdateContext ctx) {
-	// DEBUG
-	std::cout << "Performing 'Pursue' Movement Behavior." << std::endl;
-}
-
-void Boid::evade(AgentUpdateContext ctx) {
-	// DEBUG
-	std::cout << "Performing 'Evade' Movement Behavior." << std::endl;
-}
-
 void Boid::wander(AgentUpdateContext ctx) {
 	// DEBUG
 	std::cout << "Performing 'Wander' Movement Behavior." << std::endl;

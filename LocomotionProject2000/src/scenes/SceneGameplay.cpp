@@ -333,8 +333,8 @@ SceneGameplay::SceneGameplay() {
 			// DEBUG
 			std::cout << "Num-3 Key Pressed in context of Gameplay Scene!" << std::endl;
 
-			// Set the Movement Behaviour to Pursue for all Boids
-			this->m_currentBehaviour = BehaviourState::PURSUE;
+			// Set the Movement Behaviour to Wander for all Boids
+			this->m_currentBehaviour = BehaviourState::WANDER;
 		}
 	});
 	// -- //
@@ -356,8 +356,8 @@ SceneGameplay::SceneGameplay() {
 			// DEBUG
 			std::cout << "Num-4 Key Pressed in context of Gameplay Scene!" << std::endl;
 
-			// Set the Movement Behaviour to Evade for all Boids
-			this->m_currentBehaviour = BehaviourState::EVADE;
+			// Set the Movement Behaviour to Arrival for all Boids
+			this->m_currentBehaviour = BehaviourState::ARRIVAL;
 		}
 	});
 	// -- //
@@ -379,8 +379,8 @@ SceneGameplay::SceneGameplay() {
 			// DEBUG
 			std::cout << "Num-5 Key Pressed in context of Gameplay Scene!" << std::endl;
 
-			// Set the Movement Behaviour to Wander for all Boids
-			this->m_currentBehaviour = BehaviourState::WANDER;
+			// Set the Movement Behaviour to Flock for all Boids
+			this->m_currentBehaviour = BehaviourState::FLOCK;
 		}
 	});
 	// -- //
@@ -402,54 +402,8 @@ SceneGameplay::SceneGameplay() {
 			// DEBUG
 			std::cout << "Num-6 Key Pressed in context of Gameplay Scene!" << std::endl;
 
-			// Set the Movement Behaviour to Arrival for all Boids
-			this->m_currentBehaviour = BehaviourState::ARRIVAL;
-		}
-	});
-	// -- //
-
-	// -- Number 7 Key Pressed -- //
-	this->m_commands.push_back({
-		// Execution Criteria
-		[](const sf::Event& event) {
-			// First check if the Event was a Key Press, then check if the Key was the Number 7 Key
-			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
-				return key->scancode == sf::Keyboard::Scancode::Num7;
-			}
-
-			// Otherwise, the event does not match the criteria
-			return false;
-		},
-		// Command Action
-		[this](const CommandContext& ctx) {
-			// DEBUG
-			std::cout << "Num-7 Key Pressed in context of Gameplay Scene!" << std::endl;
-
-			// Set the Movement Behaviour to Flock for all Boids
-			this->m_currentBehaviour = BehaviourState::FLOCK;
-		}
-	});
-	// -- //
-
-	// -- Number 8 Key Pressed -- //
-	this->m_commands.push_back({
-		// Execution Criteria
-		[](const sf::Event& event) {
-			// First check if the Event was a Key Press, then check if the Key was the Number 8 Key
-			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
-				return key->scancode == sf::Keyboard::Scancode::Num8;
-			}
-
-			// Otherwise, the event does not match the criteria
-			return false;
-		},
-		// Command Action
-		[this](const CommandContext& ctx) {
-			// DEBUG
-			std::cout << "Num-8 Key Pressed in context of Gameplay Scene!" << std::endl;
-
 			// Set the Movement Behaviour to Leader-Follow for all Boids
-			this->m_currentBehaviour = BehaviourState::ARRIVAL;
+			this->m_currentBehaviour = BehaviourState::LEADER_FOLLOW;
 		}
 	});
 	// -- //
@@ -524,8 +478,6 @@ void SceneGameplay::updateUI() {
 		case BehaviourState::NONE: targetModeString += "NONE"; break; // None
 		case BehaviourState::SEEK: targetModeString += "SEEK"; break; // Seek
 		case BehaviourState::FLEE: targetModeString += "FLEE"; break; // Flee
-		case BehaviourState::PURSUE: targetModeString += "PURSUE"; break; // Pursue
-		case BehaviourState::EVADE: targetModeString += "EVADE"; break; // Evade
 		case BehaviourState::WANDER: targetModeString += "WANDER"; break; // Wander
 		case BehaviourState::ARRIVAL: targetModeString += "ARRIVAL"; break; // Arrival
 		case BehaviourState::FLOCK: targetModeString += "FLOCK"; break; // Flock
@@ -539,8 +491,6 @@ void SceneGameplay::updateUI() {
 		case BehaviourState::NONE: boidMovementStateString += "NONE"; break; // None
 		case BehaviourState::SEEK: boidMovementStateString += "SEEK"; break; // Seek
 		case BehaviourState::FLEE: boidMovementStateString += "FLEE"; break; // Flee
-		case BehaviourState::PURSUE: boidMovementStateString += "PURSUE"; break; // Pursue
-		case BehaviourState::EVADE: boidMovementStateString += "EVADE"; break; // Evade
 		case BehaviourState::WANDER: boidMovementStateString += "WANDER"; break; // Wander
 		case BehaviourState::ARRIVAL: boidMovementStateString += "ARRIVAL"; break; // Arrival
 		case BehaviourState::FLOCK: boidMovementStateString += "FLOCK"; break; // Flock

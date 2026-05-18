@@ -22,12 +22,10 @@ enum class BehaviourState {
 	NONE = 0,
 	SEEK = 1,
 	FLEE = 2,
-	PURSUE = 3,
-	EVADE = 4,
-	WANDER = 5,
-	ARRIVAL = 6,
-	FLOCK = 7,
-	LEADER_FOLLOW = 8
+	WANDER = 3,
+	ARRIVAL = 4,
+	FLOCK = 5,
+	LEADER_FOLLOW = 6
 };
 
 class Boid: public Agent {
@@ -103,16 +101,6 @@ private:
 	///		Flee Movement Behaviour.
 	/// </summary>
 	void flee(AgentUpdateContext ctx);
-
-	/// <summary>
-	///		Pursue Movement Behaviour.
-	/// </summary>
-	void pursue(AgentUpdateContext ctx);
-
-	/// <summary>
-	///		Flee Movement Behaviour.
-	/// </summary>
-	void evade(AgentUpdateContext ctx);
 
 	/// <summary>
 	///		Wander Movement Behaviour.
