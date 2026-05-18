@@ -173,7 +173,6 @@ SceneGameplay::SceneGameplay() {
 	});
 	// -- //
 
-
 	// -- Space Key Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria
@@ -195,6 +194,63 @@ SceneGameplay::SceneGameplay() {
 			BehaviourState state = (this->m_target.getMovementBehaviour() == BehaviourState::NONE) 
 				? BehaviourState::WANDER : BehaviourState::NONE;
 			this->m_target.setMovementBehaviour(state);
+		}
+	});
+	// -- //
+
+	// -- Backspace Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Backspace was the Space Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::Backspace;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "Backspace Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Check if there are more than 5 Boids Present
+			if (this->m_agents.size() >= 5) {
+				// Delete 5 Boids
+				for (int i = 0; i < 5; i++) {
+					this->m_agents.pop_back();
+				}
+			}
+			else {
+				// Otherwise, Delete all Boids
+				this->m_agents.clear();
+			}
+		}
+	});
+	// -- //
+
+	// -- S Key Pressed -- //
+	this->m_commands.push_back({
+		// Execution Criteria
+		[](const sf::Event& event) {
+			// First check if the Event was a Key Press, then check if the Key was the S Key
+			if (const auto* key = event.getIf<sf::Event::KeyPressed>()) {
+				return key->scancode == sf::Keyboard::Scancode::S;
+			}
+
+			// Otherwise, the event does not match the criteria
+			return false;
+		},
+		// Command Action
+		[this](const CommandContext& ctx) {
+			// DEBUG
+			std::cout << "S Key Pressed in context of Gameplay Scene!" << std::endl;
+
+			// Spawn 10 Boids at Random Locations
+			for (int i = 0; i < 10; i++) {
+				this->spawnRandomBoid();
+			}
 		}
 	});
 	// -- //
@@ -381,6 +437,15 @@ SceneGameplay::SceneGameplay() {
 
 			// Set the Movement Behaviour to Flock for all Boids
 			this->m_currentBehaviour = BehaviourState::FLOCK;
+
+			// Check for the amount of Agents Present
+			if (this->m_agents.size() < 50) { // Minimum of 50 as per Requirement from the Brief
+				// Simply Spawn 50 Boids
+				for (int i = 0; i < 50; i++) {
+					// Random Spawn Boid Function
+					this->spawnRandomBoid();
+				}
+			}
 		}
 	});
 	// -- //
@@ -404,6 +469,18 @@ SceneGameplay::SceneGameplay() {
 
 			// Set the Movement Behaviour to Leader-Follow for all Boids
 			this->m_currentBehaviour = BehaviourState::LEADER_FOLLOW;
+
+			// Check for the amount of Agents Present
+			if (this->m_agents.size() < 15) { // Minimum of 15 as per Requirement from the Brief
+				// Simply Spawn 15 Boids
+				for (int i = 0; i < 15; i++) {
+					// Random Spawn Boid Function
+					this->spawnRandomBoid();
+				}
+			}
+
+			// Enable Wander for the Target
+			this->m_target.setMovementBehaviour(BehaviourState::WANDER);
 		}
 	});
 	// -- //
@@ -512,4 +589,18 @@ void SceneGameplay::updateUI() {
 	this->m_boidMovementStateText->setString(boidMovementStateString);
 	this->m_boidTotalText->setString(boidTotalString);
 	this->m_obstacleTotalText->setString(obstacleTotalString);
+}
+
+void SceneGameplay::spawnRandomBoid() {
+	// Getting the Screen Dimenions
+	float screenWidth = static_cast<float>(Settings::getInstance().windowWidth);
+	float screenHeight = static_cast<float>(Settings::getInstance().windowHeight);
+
+	// Calculating the Random Position
+	std::uniform_real_distribution<float> randomX(0.0f, screenWidth);
+	std::uniform_real_distribution<float> randomY(0.0f, screenHeight);
+	sf::Vector2f randomPosition = sf::Vector2f(randomX(this->m_rng), randomY(this->m_rng));
+
+	// Spawning the Boid
+	this->m_agents.emplace_back(std::make_unique<Boid>(randomPosition, this->m_currentBehaviour));
 }

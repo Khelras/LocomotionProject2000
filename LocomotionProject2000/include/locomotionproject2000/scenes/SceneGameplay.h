@@ -40,6 +40,10 @@ private:
 	std::unique_ptr<sf::Text> m_obstacleTotalText;
 	// -- //
 
+	// -- Other -- //
+	std::mt19937 m_rng{ std::random_device{}() };
+	// -- //
+
 public:
 	//==================================================
 	// CONSTRUCTOR AND DESTRUCTOR
@@ -90,5 +94,10 @@ private:
 	///		Update the UI.
 	/// </summary>
 	void updateUI();
+
+	/// <summary>
+	///		Spawn a Boid at a Random Location.
+	/// </summary>
+	void spawnRandomBoid();
 };
 
