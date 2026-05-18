@@ -17,6 +17,7 @@ class Target: public Agent {
 private:
 	// -- Target Properties -- //
 	BehaviourState m_currentBehaviour;
+	float m_wanderAngle;
 	// -- //
 
 public:
