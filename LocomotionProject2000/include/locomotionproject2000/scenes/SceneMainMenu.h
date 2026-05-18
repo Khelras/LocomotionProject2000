@@ -24,7 +24,7 @@ private:
 	// -- //
 
 	// -- Main Scene Properties -- //
-
+	sf::Font m_font;
 	// -- //
 
 public:
