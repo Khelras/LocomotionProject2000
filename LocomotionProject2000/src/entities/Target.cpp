@@ -22,11 +22,10 @@ Target::Target() {
 	this->m_shape->setOrigin(this->m_shape->getGeometricCenter());
 	this->m_shape->setFillColor(sf::Color::Green);
 
-	// Default Behaviour
+	// Default Properties
 	this->m_currentBehaviour = BehaviourState::NONE;
-
-	// Default Wander Angle of 0 
 	this->m_wanderAngle = 0.0f;
+	this->m_leadingBehindOffset = 40.0f;
 
 	// Speed
 	this->m_maxSpeed = 125.0f;

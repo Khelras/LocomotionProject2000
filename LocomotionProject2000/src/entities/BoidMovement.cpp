@@ -87,7 +87,7 @@ void Boid::arrival(AgentUpdateContext ctx) {
 	sf::Vector2f targetPos = ctx.target.getPosition();
 	sf::Vector2f desiredVelocity = this->getShortestPathVector(this->m_position, targetPos);
 
-	// Slowing Down Radius (Kinematics Approximation)
+	// Calculate Slowing Down Radius (Kinematics Approximation)
 	float slowingRadius = (this->m_mass * (this->m_maxSpeed * this->m_maxSpeed)) / (2.0f * this->m_maxForce);
 	
 	// Check the Distance between the Boid and the Target
@@ -137,8 +137,86 @@ void Boid::flock(AgentUpdateContext ctx) {
 }
 
 void Boid::leaderFollow(AgentUpdateContext ctx) {
-	// DEBUG
-	std::cout << "Performing 'Leader-Follow' Movement Behavior." << std::endl;
+	// Weights
+	float arriveForceWeight = 1.5f;
+	float evadeForceWeight = 5.0f;
+	float separationForceWeight = 1.2f;
+
+	// -- Arrival Behaviour Movement -- //
+	// Get the Forward Vector of the Target Leader
+	sf::Vector2f leaderVelocity = ctx.target.getVelocity(); 
+	sf::Vector2f leaderForward = (leaderVelocity.lengthSquared() == 0.0f) ? sf::Vector2f(1.0f, 0.0f) : leaderVelocity.normalized();
+
+	// Calculate the "Behind" offset Point from the Target Leader
+	float behindDistance = ctx.target.getLeadingBehindOffset();
+	sf::Vector2f behindPoint = ctx.target.getPosition() - leaderForward * behindDistance;
+
+	// Arrive at the Behind Point and NOT the Target Leader
+	sf::Vector2f desiredVelocity = this->getShortestPathVector(this->m_position, behindPoint);
+
+	// Calculate Slowing Down Radius (Kinematics Approximation)
+	float slowingRadius = (this->m_mass * (this->m_maxSpeed * this->m_maxSpeed)) / (2.0f * this->m_maxForce);
+
+	// Check if Boid is within the Slowing Down Radius
+	float distance = desiredVelocity.length();
+	if (distance < slowingRadius) {
+		// Small Distance
+		if (distance < 0.01f) {
+			// Come to a Stop
+			this->m_velocity = sf::Vector2f(0.f, 0.f);
+			return;
+		}
+
+		// Slow Down
+		desiredVelocity = desiredVelocity.normalized() * this->m_maxSpeed * (distance / slowingRadius);
+	}
+	else {
+		// Max Desired Velocity
+		desiredVelocity = desiredVelocity.normalized() * this->m_maxSpeed;
+	}
+
+	// Calculate the Steering Force
+	sf::Vector2f steering = desiredVelocity - this->m_velocity;
+	steering = (steering.lengthSquared() > this->m_maxForce * this->m_maxForce)
+		? steering.normalized() * this->m_maxForce : steering;
+
+	// Apply the Arrival Steering Force
+	this->m_acceleration += (steering * arriveForceWeight) / this->m_mass;
+	// -- //
+	
+
+
+	// -- Evasion Behaviour Movement -- //
+	// Calculate the Distance from the Boid to the Leader
+	sf::Vector2f leaderPos = ctx.target.getPosition();
+	float distanceToLeader = this->getShortestPathVector(this->m_position, leaderPos).length();
+
+	// Calculate the Evasion Radius
+	float evadeRadius = ctx.target.getLeadingBehindOffset() * 4.0f;
+
+	// Check if the Distance to the Leader is within the Evasion Radius
+	if (distanceToLeader < evadeRadius) {
+		// Predict where the Leader will be
+		float lookAhead = distanceToLeader / this->m_maxSpeed;
+		sf::Vector2f predicted = leaderPos + leaderVelocity * lookAhead;
+
+		// Flee from taht Predicted Position
+		sf::Vector2f evadeDesired = this->getShortestPathVector(predicted, this->m_position).normalized() * this->m_maxSpeed;
+		sf::Vector2f evadeSteering = evadeDesired - this->m_velocity;
+		evadeSteering = (evadeSteering.lengthSquared() > this->m_maxForce * this->m_maxForce)
+			? evadeSteering.normalized() * this->m_maxForce : evadeSteering;
+
+		// Apply the Evade Steering Force
+		this->m_acceleration += (evadeSteering * evadeForceWeight) / this->m_mass;
+	}
+	// -- //
+
+
+
+	// -- Separation Steering Force -- //
+	sf::Vector2f separationForce = this->separation(ctx);
+	this->m_acceleration += (separationForce * separationForceWeight) / this->m_mass;
+	// -- //
 }
 
 sf::Vector2f Boid::separation(AgentUpdateContext ctx) {

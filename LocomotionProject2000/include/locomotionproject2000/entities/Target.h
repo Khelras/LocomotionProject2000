@@ -18,6 +18,7 @@ private:
 	// -- Target Properties -- //
 	BehaviourState m_currentBehaviour;
 	float m_wanderAngle;
+	float m_leadingBehindOffset;
 	// -- //
 
 public:
@@ -65,4 +66,11 @@ public:
 	/// 
 	/// <param name="movementBehaviour">Movement Behaviour State.</param>
 	void setMovementBehaviour(BehaviourState movementBehaviour);
+
+	/// <summary>
+	///		Get the Leading Behind Offset.
+	/// </summary>
+	/// 
+	/// <returns>Leading Behind Offset.</returns>
+	float getLeadingBehindOffset() const { return this->m_leadingBehindOffset; };
 };
