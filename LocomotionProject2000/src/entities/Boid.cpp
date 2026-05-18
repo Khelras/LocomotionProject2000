@@ -43,6 +43,7 @@ Boid::Boid(sf::Vector2f position, BehaviourState movementBehaviour) : Boid() {
 	convex->setOrigin(sf::Vector2f(0.0f, 0.0f));
 	convex->setFillColor(sf::Color::White);
 	this->m_shape = std::move(convex);
+	this->m_shape->setScale(sf::Vector2f(0.8f, 0.8f));
 
 	// Width of the Detection Box of the Boid (From the Back two Points of the Boid)
 	this->m_detectionWidth = (this->m_shape->getPoint(1) - this->m_shape->getPoint(3)).length() * 1.5f; // Extra for Safety
@@ -67,10 +68,10 @@ void Boid::update(AgentUpdateContext ctx) {
 		case BehaviourState::ARRIVAL: this->arrival(ctx); break; // Arrival Movement Behaviour
 		case BehaviourState::FLOCK: this->flock(ctx); break; // Flock Movement Behaviour
 		case BehaviourState::LEADER_FOLLOW: this->leaderFollow(ctx); break; // Follow the Leader Movement Behaviour
-		default: {
+		default: { // Default
 			// Stop
 			this->m_velocity = sf::Vector2f(0.0f, 0.0f);
-		} break; // Default
+		} break; 
 	}
 
 	// Detect Nearby Obstacles
@@ -142,7 +143,7 @@ void Boid::update(AgentUpdateContext ctx) {
 		sf::Vector2f totalWorld = forward * totalLocal.x + right * totalLocal.y;
 
 		// Max Steering Force Specific to Object Avoidance
-		float maxSteeringForce = this->m_maxSpeed * 1.5f; // 1.5x more than Max Speed
+		float maxSteeringForce = this->m_maxSpeed * 3.0f; // 3x more than Max Speed
 
 		// Calculate the Final Steering Force
 		sf::Vector2f steering = totalWorld;
@@ -150,7 +151,7 @@ void Boid::update(AgentUpdateContext ctx) {
 			? steering.normalized() * maxSteeringForce : steering;
 
 		// Cacluate the Acceleration (F = ma >> a = F/m)
-		this->m_acceleration += (steering * 3.0f) / this->m_mass; // consistent with seek
+		this->m_acceleration += steering / this->m_mass; // consistent with seek
 	}
 
 	// Apply Acceleration

@@ -118,10 +118,7 @@ void Boid::arrival(AgentUpdateContext ctx) {
 }
 
 void Boid::flock(AgentUpdateContext ctx) {
-	// DEBUG
-	std::cout << "Performing 'Flock' Movement Behavior." << std::endl;
-
-	// Wander provides the base locomotion instead of seeking a target
+	// Wander as the Base Locomotion
 	this->wander(ctx);
 
 	sf::Vector2f seperationForce = this->separation(ctx);

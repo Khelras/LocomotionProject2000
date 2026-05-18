@@ -27,6 +27,9 @@ Target::Target() {
 
 	// Default Wander Angle of 0 
 	this->m_wanderAngle = 0.0f;
+
+	// Speed
+	this->m_maxSpeed = 125.0f;
 }
 
 Target::~Target() {
