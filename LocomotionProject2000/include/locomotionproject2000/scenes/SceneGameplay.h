@@ -25,11 +25,19 @@ private:
 
 	// -- //
 
-	// -- Main Scene Properties -- //
+	// -- Gameplay Scene Properties -- //
 	BehaviourState m_currentBehaviour;
 	Target m_target;
 	std::vector<std::unique_ptr<Agent>> m_agents;
 	std::vector<Obstacle> m_obstacles;
+	// -- //
+
+	// -- Gameplay Scene UI -- //
+	sf::Font m_font;
+	std::unique_ptr<sf::Text> m_targetModeText;
+	std::unique_ptr<sf::Text> m_boidMovementStateText;
+	std::unique_ptr<sf::Text> m_boidTotalText;
+	std::unique_ptr<sf::Text> m_obstacleTotalText;
 	// -- //
 
 public:
@@ -72,5 +80,15 @@ public:
 	/// 
 	/// <param name="window">Render target for drawing.</param>
 	void draw(sf::RenderWindow& window) override;
+
+private:
+	//==================================================
+	// GAMEPLAY SCENE HELPER METHODS
+	//==================================================
+
+	/// <summary>
+	///		Update the UI.
+	/// </summary>
+	void updateUI();
 };
 

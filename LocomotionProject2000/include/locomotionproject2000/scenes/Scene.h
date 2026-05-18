@@ -14,6 +14,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "locomotionproject2000/core/Command.h"
 

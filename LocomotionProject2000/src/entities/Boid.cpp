@@ -47,14 +47,14 @@ Boid::~Boid() {
 void Boid::update(AgentUpdateContext ctx) {
 	// Switch-Case for the Movement Behaviour
 	switch (this->m_currentBehaviour) {
-		case BehaviourState::SEEK: this->seek(ctx); break; // Seek Momvement Behaviour
-		case BehaviourState::FLEE: this->flee(ctx); break; // Flee Momvement Behaviour
-		case BehaviourState::PURSUE: this->pursue(ctx); break; // Pursue Momvement Behaviour
-		case BehaviourState::EVADE: this->evade(ctx); break; // Evade Momvement Behaviour
-		case BehaviourState::WANDER: this->wander(ctx); break; // Wander Momvement Behaviour
-		case BehaviourState::ARRIVAL: this->arrival(ctx); break; // Arrival Momvement Behaviour
-		case BehaviourState::FLOCK: this->flock(ctx); break; // Flock Momvement Behaviour
-		case BehaviourState::LEADER_FOLLOW: this->leaderFollow(ctx); break; // Follow the Leader Momvement Behaviour
+		case BehaviourState::SEEK: this->seek(ctx); break; // Seek Movement Behaviour
+		case BehaviourState::FLEE: this->flee(ctx); break; // Flee Movement Behaviour
+		case BehaviourState::PURSUE: this->pursue(ctx); break; // Pursue Movement Behaviour
+		case BehaviourState::EVADE: this->evade(ctx); break; // Evade Movement Behaviour
+		case BehaviourState::WANDER: this->wander(ctx); break; // Wander Movement Behaviour
+		case BehaviourState::ARRIVAL: this->arrival(ctx); break; // Arrival Movement Behaviour
+		case BehaviourState::FLOCK: this->flock(ctx); break; // Flock Movement Behaviour
+		case BehaviourState::LEADER_FOLLOW: this->leaderFollow(ctx); break; // Follow the Leader Movement Behaviour
 		default: break; // Default
 	}
 

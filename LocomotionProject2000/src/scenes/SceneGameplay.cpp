@@ -25,6 +25,47 @@ SceneGameplay::SceneGameplay() {
 	// Default Movement Behaviour
 	this->m_currentBehaviour = BehaviourState::NONE;
 
+	// UI
+	if (this->m_font.openFromFile("assets/fonts/arial.ttf")) {
+		// Text Attributes
+		unsigned int fontSize = 25;
+		float textMargin = 10.0f;
+		sf::Vector2f textPos(0.0f, 0.0f);
+		textPos.x += textMargin;
+
+		// Load the Target Mode Text
+		this->m_targetModeText = std::make_unique<sf::Text>(this->m_font);
+		this->m_targetModeText->setCharacterSize(fontSize);
+		this->m_targetModeText->setString("Target Mode: ...");
+		textPos.y += textMargin;
+		this->m_targetModeText->setPosition(textPos);
+
+		// Load the Boid Movement State Text
+		this->m_boidMovementStateText = std::make_unique<sf::Text>(this->m_font);
+		this->m_boidMovementStateText->setCharacterSize(fontSize);
+		this->m_boidMovementStateText->setString("Boid Movement Behaviour State: ...");
+		textPos.y += this->m_targetModeText->getLocalBounds().size.y + textMargin;
+		this->m_boidMovementStateText->setPosition(textPos);
+		
+		// Load the Boid Total Text
+		this->m_boidTotalText = std::make_unique<sf::Text>(this->m_font);
+		this->m_boidTotalText->setCharacterSize(fontSize);
+		this->m_boidTotalText->setString("Total Boids: ...");
+		textPos.y += this->m_boidMovementStateText->getLocalBounds().size.y + textMargin;
+		this->m_boidTotalText->setPosition(textPos);
+
+		// Load the Obstacle Total Text
+		this->m_obstacleTotalText = std::make_unique<sf::Text>(this->m_font);
+		this->m_obstacleTotalText->setCharacterSize(fontSize);
+		this->m_obstacleTotalText->setString("Total Obstacles: ...");
+		textPos.y += this->m_boidTotalText->getLocalBounds().size.y + textMargin;
+		this->m_obstacleTotalText->setPosition(textPos);
+
+	} else {
+		// DEBUG
+		std::cerr << "Unable to open file from path: 'assets/fonts/arial.ttf'" << std::endl;
+	}
+
 	// -- Left Mouse Button Pressed -- //
 	this->m_commands.push_back({
 		// Execution Criteria
@@ -365,6 +406,9 @@ void SceneGameplay::update(float dt) {
 		// Update Agent State
 		agent->update(ctx);
 	}
+
+	// Update the UI
+	this->updateUI();
 }
 
 void SceneGameplay::draw(sf::RenderWindow& window) {
@@ -382,4 +426,57 @@ void SceneGameplay::draw(sf::RenderWindow& window) {
 		// Draw the Obstacle
 		window.draw(obstacle.getShape());
 	}
+
+	// Draw the UI Text
+	window.draw(*this->m_targetModeText.get());
+	window.draw(*this->m_boidMovementStateText.get());
+	window.draw(*this->m_boidTotalText.get());
+	window.draw(*this->m_obstacleTotalText.get());
+}
+
+void SceneGameplay::updateUI() {
+	// Update the Target Mode String
+	std::string targetModeString = "Target Mode: ";
+	switch (this->m_target.getMovementBehaviour()) {
+		case BehaviourState::NONE: targetModeString += "NONE"; break; // None
+		case BehaviourState::SEEK: targetModeString += "SEEK"; break; // Seek
+		case BehaviourState::FLEE: targetModeString += "FLEE"; break; // Flee
+		case BehaviourState::PURSUE: targetModeString += "PURSUE"; break; // Pursue
+		case BehaviourState::EVADE: targetModeString += "EVADE"; break; // Evade
+		case BehaviourState::WANDER: targetModeString += "WANDER"; break; // Wander
+		case BehaviourState::ARRIVAL: targetModeString += "ARRIVAL"; break; // Arrival
+		case BehaviourState::FLOCK: targetModeString += "FLOCK"; break; // Flock
+		case BehaviourState::LEADER_FOLLOW: targetModeString += "LEADER_FOLLOW"; break; // Follow the Leader
+		default: targetModeString += "NONE"; break; // Default
+	}
+
+	// Update the Boid Movement State String
+	std::string boidMovementStateString = "Boid Movement Behaviour State: ";
+	switch (this->m_currentBehaviour) {
+		case BehaviourState::NONE: boidMovementStateString += "NONE"; break; // None
+		case BehaviourState::SEEK: boidMovementStateString += "SEEK"; break; // Seek
+		case BehaviourState::FLEE: boidMovementStateString += "FLEE"; break; // Flee
+		case BehaviourState::PURSUE: boidMovementStateString += "PURSUE"; break; // Pursue
+		case BehaviourState::EVADE: boidMovementStateString += "EVADE"; break; // Evade
+		case BehaviourState::WANDER: boidMovementStateString += "WANDER"; break; // Wander
+		case BehaviourState::ARRIVAL: boidMovementStateString += "ARRIVAL"; break; // Arrival
+		case BehaviourState::FLOCK: boidMovementStateString += "FLOCK"; break; // Flock
+		case BehaviourState::LEADER_FOLLOW: boidMovementStateString += "LEADER_FOLLOW"; break; // Follow the Leader
+		default: boidMovementStateString += "NONE"; break; // Default
+	}
+
+	// Update the Boid Total String
+	std::string boidTotalString = "Total Boids: ";
+	boidTotalString += std::to_string(this->m_agents.size());
+
+
+	// Update the Obstacle Total String
+	std::string obstacleTotalString = "Total Obstacles: ";
+	obstacleTotalString += std::to_string(this->m_obstacles.size());
+
+	// Update all the String to UI Text
+	this->m_targetModeText->setString(targetModeString);
+	this->m_boidMovementStateText->setString(boidMovementStateString);
+	this->m_boidTotalText->setString(boidTotalString);
+	this->m_obstacleTotalText->setString(obstacleTotalString);
 }
